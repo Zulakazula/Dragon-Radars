@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dragonradarmod:item/dormant/base",
+    "layer1": "dragonradarmod:item/dormant/needle_purified",
+    "layer2": "dragonradarmod:item/dormant/basin_active",
+    "layer3": "dragonradarmod:item/dormant/outline_purified"
+  }
+}

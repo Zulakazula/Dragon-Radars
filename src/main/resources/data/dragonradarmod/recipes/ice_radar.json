@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SNS",
+    "SCS",
+    "SSS"
+  ],
+  "key": {
+    "N": { "item": "minecraft:nether_star" },
+    "C": { "item": "minecraft:compass" },
+    "S": { "tag": "dragonradarmod:ice_dragon_scales" }
+  },
+  "result": {
+    "item": "dragonradarmod:ice_radar",
+    "count": 1
+  }
+}

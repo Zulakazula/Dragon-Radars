@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dragonradarmod:item/dormant/base",
+    "layer1": "dragonradarmod:item/dormant/basin_active"
+  }
+}   

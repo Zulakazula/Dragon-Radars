@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dragonradarmod:item/dormant/base"
+  },
+  "overrides": [
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 0.0, "dragonradarmod:lightning_state": 0.0 }, "model": "dragonradarmod:item/frames/dormant/needle_active" },
+    { "predicate": { "dragonradarmod:fire_state": 0.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 0.0 }, "model": "dragonradarmod:item/frames/dormant/basin_active" },
+    { "predicate": { "dragonradarmod:fire_state": 0.0, "dragonradarmod:ice_state": 0.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/outline_active" },
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 0.0 }, "model": "dragonradarmod:item/frames/dormant/needle_basin_active" },
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 0.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/needle_outline_active" },
+    { "predicate": { "dragonradarmod:fire_state": 0.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/basin_outline_active" },
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/all_active" },
+    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active" },
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active" },
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active" },
+    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active" },
+    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active" },
+    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active" },
+    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/all_purified" }
+  ]
+}
