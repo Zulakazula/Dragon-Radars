@@ -121,12 +121,12 @@ public class ItemDormantRadar extends Item {
 
             lines.add(Component.literal("Once merged, equip in offhand and")
                     .withStyle(ChatFormatting.DARK_GRAY));
-            lines.add(Component.literal("slay Stage 4+ dragons to purify.")
+            lines.add(Component.literal("slay Stage 4-5 dragons to purify.")
                     .withStyle(ChatFormatting.DARK_GRAY));
 
         } else {
             // --- PURIFY PHASE TOOLTIP ---
-            lines.add(Component.literal("Slay a Stage 4+ of each dragon:")
+            lines.add(Component.literal("Slay a Stage 4-5 of each dragon:")
                     .withStyle(ChatFormatting.GRAY));
 
             lines.add(Component.literal("  Fire Dragon:      ")
