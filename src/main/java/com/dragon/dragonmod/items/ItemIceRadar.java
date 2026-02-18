@@ -46,4 +46,4 @@ public class ItemIceRadar extends Item {
         tooltip.add(Component.literal("to begin purification process")
                 .withStyle(ChatFormatting.GRAY));
     }
-}
+}   
