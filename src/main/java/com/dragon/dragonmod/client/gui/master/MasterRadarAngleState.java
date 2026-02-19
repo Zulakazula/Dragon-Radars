@@ -18,8 +18,8 @@ public class MasterRadarAngleState {
         
         if (targetID != null) {
             for (DragonInfo d : MasterRadarSettings.INSTANCE.globalResults) {
-                String dragonID = d.type + "_S" + d.stage;
-                if (targetID.startsWith(dragonID)) {
+                String dragonID = d.type + "_S" + d.stage + "_X" + (int)d.x + "_Z" + (int)d.z;
+                if (targetID.equals(dragonID)) {
                     targetData = d;
                     break;
                 }
@@ -34,10 +34,8 @@ public class MasterRadarAngleState {
             double horizontalDistance = Math.sqrt(dx * dx + dz * dz);
             
             if (horizontalDistance < 5.0) {
-                // SPIN when on correct X/Z
                 targetRotation = 1.0f - (float)(level.getGameTime() % 40L) / 40.0f;
             } else {
-                // Point to target using old formula
                 double angleToTarget = Math.atan2(dz, dx);
                 double playerYawRadians = Math.toRadians(entity.getYRot() + 90.0f);
                 double relativeAngle = angleToTarget - playerYawRadians;
@@ -45,7 +43,6 @@ public class MasterRadarAngleState {
                 targetRotation = Mth.positiveModulo(targetRotation, 1.0f);
             }
         } else {
-            // SPIN when no target
             targetRotation = (float)(level.getGameTime() % 40L) / 40.0f;
         }
 

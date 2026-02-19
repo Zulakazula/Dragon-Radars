@@ -45,24 +45,24 @@ public class MasterRadarScreen extends Screen {
     private TransparentSlider radiusSlider;
 
     public static class TrackedDragon {
-        public String name;
-        public int stage;
-        public boolean isMale;
-        public int distance;
-        public String id;
-        public double x, y, z;
+    public String name;
+    public int stage;
+    public boolean isMale;
+    public int distance;
+    public String id;
+    public double x, y, z;
 
-        public TrackedDragon(DragonInfo info, int dist, int index) {
-            this.name = info.type; 
-            this.stage = info.stage;
-            this.isMale = info.isMale;
-            this.distance = dist;
-            this.x = info.x;
-            this.y = info.y;
-            this.z = info.z;
-            this.id = this.name + "_S" + this.stage + "_" + index;
-        }
+    public TrackedDragon(DragonInfo info, int dist, int index) {
+        this.name = info.type; 
+        this.stage = info.stage;
+        this.isMale = info.isMale;
+        this.distance = dist;
+        this.x = info.x;
+        this.y = info.y;
+        this.z = info.z;
+        this.id = this.name + "_S" + this.stage + "_X" + (int)info.x + "_Z" + (int)info.z;
     }
+}
 
     public MasterRadarScreen() {
         super(Component.literal("Master Dragon Radar"));
@@ -83,7 +83,7 @@ public class MasterRadarScreen extends Screen {
         DragonScanner.isSearchComplete = false;
         DragonScanner.requestServerSearch(MasterRadarSettings.INSTANCE.searchRadius, "master");
         this.isWaitingForResults = true;
-        this.serverWaitTimer = 200; 
+        this.serverWaitTimer = 340; 
         this.scrollAmount = 0;
     }
 
@@ -102,14 +102,20 @@ public class MasterRadarScreen extends Screen {
         }
         
         return result.stream()
-            .filter(d -> MasterRadarSettings.INSTANCE.selectedDragons.contains(d.name))
-            .filter(d -> MasterRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
-            .filter(d -> MasterRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
-            .sorted((d1, d2) -> MasterRadarSettings.INSTANCE.sortClosest ? 
-                Integer.compare(d1.distance, d2.distance) : 
-                Integer.compare(d2.distance, d1.distance))
-            .collect(Collectors.toList());
-    }
+    .filter(d -> MasterRadarSettings.INSTANCE.selectedDragons.contains(d.name))
+    .filter(d -> MasterRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
+    .filter(d -> MasterRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
+    .sorted((d1, d2) -> {
+        boolean d1Tracked = d1.id.equals(currentlyTrackedMaster);
+        boolean d2Tracked = d2.id.equals(currentlyTrackedMaster);
+        if (d1Tracked && !d2Tracked) return -1;
+        if (!d1Tracked && d2Tracked) return 1;
+        return MasterRadarSettings.INSTANCE.sortClosest ? 
+            Integer.compare(d1.distance, d2.distance) : 
+            Integer.compare(d2.distance, d1.distance);
+    })
+    .collect(Collectors.toList());
+}
 
     private int getMaxScroll() {
         int listStartY = 50; 

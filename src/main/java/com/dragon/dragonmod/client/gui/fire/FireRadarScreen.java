@@ -58,7 +58,7 @@ public class FireRadarScreen extends Screen {
             this.x = info.x;
             this.y = info.y;
             this.z = info.z;
-            this.id = this.name + "_S" + this.stage + "_" + index;
+            this.id = this.name + "_S" + this.stage + "_X" + (int)info.x + "_Z" + (int)info.z;
         }
     }
 
@@ -79,7 +79,7 @@ public class FireRadarScreen extends Screen {
         DragonScanner.isSearchComplete = false;
         DragonScanner.requestServerSearch(FireRadarSettings.INSTANCE.searchRadius, "fire");
         this.isWaitingForResults = true;
-        this.serverWaitTimer = 200; 
+        this.serverWaitTimer = 340; 
         this.scrollAmount = 0;
     }
 
@@ -101,11 +101,19 @@ public class FireRadarScreen extends Screen {
             .filter(d -> d.name.contains("Fire"))
             .filter(d -> FireRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
             .filter(d -> FireRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
-            .sorted((d1, d2) -> FireRadarSettings.INSTANCE.sortClosest ? 
-                Integer.compare(d1.distance, d2.distance) : 
-                Integer.compare(d2.distance, d1.distance))
-            .collect(Collectors.toList());
-    }
+            .sorted((d1, d2) -> {
+                boolean d1Tracked = d1.id.equals(currentlyTrackedFire);
+                boolean d2Tracked = d2.id.equals(currentlyTrackedFire);
+                if (d1Tracked && !d2Tracked) return -1;
+                if (!d1Tracked && d2Tracked) return 1;
+        
+        // Then sort by distance
+                return FireRadarSettings.INSTANCE.sortClosest ? 
+                    Integer.compare(d1.distance, d2.distance) : 
+                    Integer.compare(d2.distance, d1.distance);
+            })
+        .collect(Collectors.toList());
+        }
 
     private int getMaxScroll() {
         int listStartY = 50; 

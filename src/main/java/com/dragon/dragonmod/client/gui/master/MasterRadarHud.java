@@ -21,11 +21,10 @@ public class MasterRadarHud {
         
         if (targetID == null) return;
         
-        // Find the tracked dragon by ID
         DragonInfo target = null;
         for (DragonInfo d : MasterRadarSettings.INSTANCE.globalResults) {
-            String dragonID = d.type + "_S" + d.stage;
-            if (targetID.startsWith(dragonID)) {
+            String dragonID = d.type + "_S" + d.stage + "_X" + (int)d.x + "_Z" + (int)d.z;
+            if (targetID.equals(dragonID)) {
                 target = d;
                 break;
             }
@@ -40,9 +39,7 @@ public class MasterRadarHud {
             int x = 10;
             int y = 10;
             
-            // Background box (black)
             gui.fill(x - 2, y - 2, x + 160, y + 42, 0x99000000);
-            // Green outline
             gui.renderOutline(x - 2, y - 2, 162, 44, 0xFF00FF00);
             
             String nameLine = target.type + " (Stage " + target.stage + ")";

@@ -18,8 +18,8 @@ public class IceRadarAngleState {
         
         if (targetID != null) {
             for (DragonInfo d : IceRadarSettings.INSTANCE.globalResults) {
-                String dragonID = d.type + "_S" + d.stage;
-                if (targetID.startsWith(dragonID)) {
+                String dragonID = d.type + "_S" + d.stage + "_X" + (int)d.x + "_Z" + (int)d.z;
+                if (targetID.equals(dragonID)) {
                     targetData = d;
                     break;
                 }

@@ -3,6 +3,7 @@ package com.dragon.dragonmod.client.gui.ice;
 import com.dragon.dragonmod.client.DragonInfo;
 import com.dragon.dragonmod.client.DragonScanner;
 import com.dragon.dragonmod.client.GlobalRadarState;
+import com.dragon.dragonmod.client.gui.fire.FireRadarSettings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,24 +44,24 @@ public class IceRadarScreen extends Screen {
     private TransparentSlider radiusSlider;
 
     public static class TrackedDragon {
-        public String name;
-        public int stage;
-        public boolean isMale;
-        public int distance;
-        public String id;
-        public double x, y, z;
+    public String name;
+    public int stage;
+    public boolean isMale;
+    public int distance;
+    public String id;
+    public double x, y, z;
 
-        public TrackedDragon(DragonInfo info, int dist, int index) {
-            this.name = info.type; 
-            this.stage = info.stage;
-            this.isMale = info.isMale;
-            this.distance = dist;
-            this.x = info.x;
-            this.y = info.y;
-            this.z = info.z;
-            this.id = this.name + "_S" + this.stage + "_" + index;
-        }
+    public TrackedDragon(DragonInfo info, int dist, int index) {
+        this.name = info.type; 
+        this.stage = info.stage;
+        this.isMale = info.isMale;
+        this.distance = dist;
+        this.x = info.x;
+        this.y = info.y;
+        this.z = info.z;    
+        this.id = this.name + "_S" + this.stage + "_X" + (int)info.x + "_Z" + (int)info.z;
     }
+}
 
     public IceRadarScreen() {
         super(Component.literal("Ice Dragon Radar"));
@@ -79,7 +80,7 @@ public class IceRadarScreen extends Screen {
         DragonScanner.isSearchComplete = false;
         DragonScanner.requestServerSearch(IceRadarSettings.INSTANCE.searchRadius, "ice");
         this.isWaitingForResults = true;
-        this.serverWaitTimer = 200; 
+        this.serverWaitTimer = 340; 
         this.scrollAmount = 0;
     }
 
@@ -99,13 +100,21 @@ public class IceRadarScreen extends Screen {
         
         return result.stream()
             .filter(d -> d.name.contains("Ice"))
-            .filter(d -> IceRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
-            .filter(d -> IceRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
-            .sorted((d1, d2) -> IceRadarSettings.INSTANCE.sortClosest ? 
-                Integer.compare(d1.distance, d2.distance) : 
-                Integer.compare(d2.distance, d1.distance))
-            .collect(Collectors.toList());
-    }
+            .filter(d -> FireRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
+            .filter(d -> FireRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
+            .sorted((d1, d2) -> {
+                boolean d1Tracked = d1.id.equals(currentlyTrackedIce);
+                boolean d2Tracked = d2.id.equals(currentlyTrackedIce);
+                if (d1Tracked && !d2Tracked) return -1;
+                if (!d1Tracked && d2Tracked) return 1;
+
+        // Then sort by distance
+                return IceRadarSettings.INSTANCE.sortClosest ? 
+                    Integer.compare(d1.distance, d2.distance) : 
+                    Integer.compare(d2.distance, d1.distance);
+            })
+        .collect(Collectors.toList());
+        }
 
     private int getMaxScroll() {
         int listStartY = 50; 

@@ -21,11 +21,10 @@ public class IceRadarHud {
         
         if (targetID == null) return;
         
-        // Find the tracked dragon by ID
         DragonInfo target = null;
         for (DragonInfo d : IceRadarSettings.INSTANCE.globalResults) {
-            String dragonID = d.type + "_S" + d.stage;
-            if (targetID.startsWith(dragonID)) {
+            String dragonID = d.type + "_S" + d.stage + "_X" + (int)d.x + "_Z" + (int)d.z;
+            if (targetID.equals(dragonID)) {
                 target = d;
                 break;
             }

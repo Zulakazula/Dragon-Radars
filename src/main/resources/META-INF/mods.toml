@@ -8,6 +8,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 authors="${mod_authors}"
 description="${mod_description}"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/dragon-radars"
 
 [[dependencies.dragonradarmod]]
 modId="citadel"
