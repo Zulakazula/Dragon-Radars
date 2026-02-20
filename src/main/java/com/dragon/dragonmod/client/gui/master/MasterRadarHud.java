@@ -9,6 +9,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class MasterRadarHud {
 
+    private static final int COLOR_LIGHTNING = 0xFF9933FF; 
+    private static final int COLOR_ICE = 0xFF0023FF;       
+    private static final int COLOR_FIRE = 0xFFFF0000;
+
     @SubscribeEvent
     public void onRender(RenderGuiEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -36,11 +40,21 @@ public class MasterRadarHud {
             double dz = target.z - player.getZ();
             int dist = (int) Math.sqrt(dx * dx + dy * dy + dz * dz);
             
+            // Determine outline color based on dragon type
+            int outlineColor;
+            if (target.type.contains("Lightning")) {
+                outlineColor = COLOR_LIGHTNING;
+            } else if (target.type.contains("Ice")) {
+                outlineColor = COLOR_ICE;
+            } else {
+                outlineColor = COLOR_FIRE;
+            }
+            
             int x = 10;
             int y = 10;
             
             gui.fill(x - 2, y - 2, x + 160, y + 42, 0x99000000);
-            gui.renderOutline(x - 2, y - 2, 162, 44, 0xFF00FF00);
+            gui.renderOutline(x - 2, y - 2, 162, 44, outlineColor);  // Colored!
             
             String nameLine = target.type + " (Stage " + target.stage + ")";
             String cordLine = String.format("X: %d Y: %d Z: %d", (int)target.x, (int)target.y, (int)target.z);

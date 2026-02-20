@@ -1,8 +1,12 @@
 package com.dragon.dragonmod.items;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -95,12 +99,31 @@ public class ItemDormantRadar extends Item {
         return stack.getTag();
     }
 
+    // --- USE METHOD (OPEN GUI WHEN FULLY MERGED) ---
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        
+        // Only open GUI if all merged (but not yet complete)
+        if (isAllMerged(stack) && !isComplete(stack)) {
+            if (level.isClientSide) {
+                Minecraft.getInstance().setScreen(new com.dragon.dragonmod.client.gui.dormant.DormantRadarScreen());
+            }
+            return InteractionResultHolder.success(stack);
+        }
+        
+        return InteractionResultHolder.pass(stack);
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag flag) {
         super.appendHoverText(stack, level, lines, flag);
 
         if (!isAllMerged(stack)) {
             // --- MERGE PHASE TOOLTIP ---
+            lines.add(Component.literal("⚙ ACTIVATION PROCESS")
+                    .withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD));
+            lines.add(Component.literal(""));
             lines.add(Component.literal("Merge each radar in an anvil:")
                     .withStyle(ChatFormatting.GRAY));
 
@@ -119,13 +142,17 @@ public class ItemDormantRadar extends Item {
                     .append(Component.literal(hasMergedLightning(stack) ? "✔" : "✘")
                             .withStyle(hasMergedLightning(stack) ? ChatFormatting.GREEN : ChatFormatting.RED)));
 
+            lines.add(Component.literal(""));
             lines.add(Component.literal("Once merged, equip in offhand and")
                     .withStyle(ChatFormatting.DARK_GRAY));
             lines.add(Component.literal("slay Stage 4-5 dragons to purify.")
                     .withStyle(ChatFormatting.DARK_GRAY));
 
-        } else {
+        } else if (!isComplete(stack)) {
             // --- PURIFY PHASE TOOLTIP ---
+            lines.add(Component.literal("⚗ PURIFICATION PROCESS")
+                    .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
+            lines.add(Component.literal(""));
             lines.add(Component.literal("Slay a Stage 4-5 of each dragon:")
                     .withStyle(ChatFormatting.GRAY));
 
@@ -144,13 +171,21 @@ public class ItemDormantRadar extends Item {
                     .append(Component.literal(hasKilledLightning(stack) ? "✔" : "✘")
                             .withStyle(hasKilledLightning(stack) ? ChatFormatting.GREEN : ChatFormatting.RED)));
 
-            if (isComplete(stack)) {
-                lines.add(Component.literal("✔ READY TO TRANSFORM!")
-                        .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
-            } else {
-                lines.add(Component.literal("Keep in offhand while slaying!")
-                        .withStyle(ChatFormatting.DARK_GRAY));
-            }
+            lines.add(Component.literal(""));
+            lines.add(Component.literal("Keep in offhand while slaying!")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        }  else {
+            // --- COMPLETE PHASE TOOLTIP ---
+            lines.add(Component.literal("✔ READY TO TRANSFORM!")
+                    .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+            lines.add(Component.literal(""));
+            lines.add(Component.literal("Combine in anvil with:")
+                    .withStyle(ChatFormatting.GRAY));
+            lines.add(Component.literal("  1x Emerald")
+                    .withStyle(ChatFormatting.GREEN));
+            lines.add(Component.literal(""));
+            lines.add(Component.literal("→ Creates Master Dragon Radar")
+                    .withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD));
         }
     }
 }

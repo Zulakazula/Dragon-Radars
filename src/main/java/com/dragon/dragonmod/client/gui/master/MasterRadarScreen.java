@@ -138,7 +138,7 @@ public class MasterRadarScreen extends Screen {
                     com.dragon.dragonmod.client.gui.fire.FireRadarScreen.currentlyTrackedFire = null;
                     com.dragon.dragonmod.client.gui.ice.IceRadarScreen.currentlyTrackedIce = null;
                     com.dragon.dragonmod.client.gui.lightning.LightningRadarScreen.currentlyTrackedLightning = null;
-                    
+                    com.dragon.dragonmod.client.gui.dormant.DormantRadarScreen.currentlyTrackedDormant = null;
                     currentlyTrackedMaster = selectedDragonEntry;
                     GlobalRadarState.startTracking("master", selectedDragonEntry);
                     this.onClose();

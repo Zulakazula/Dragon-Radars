@@ -2,7 +2,7 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "dragonradarmod:item/dormant/base",
-    "layer1": "dragonradarmod:item/dormant/needle_active",
-    "layer2": "dragonradarmod:item/dormant/outline_active"
+    "layer1": "dragonradarmod:item/dormant/outline_active",
+    "layer2": "dragonradarmod:item/dormant/needle_active/compass_16"
   }
 }

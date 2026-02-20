@@ -4,19 +4,2357 @@
     "layer0": "dragonradarmod:item/dormant/base"
   },
   "overrides": [
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 0.0, "dragonradarmod:lightning_state": 0.0 }, "model": "dragonradarmod:item/frames/dormant/needle_active" },
-    { "predicate": { "dragonradarmod:fire_state": 0.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 0.0 }, "model": "dragonradarmod:item/frames/dormant/basin_active" },
-    { "predicate": { "dragonradarmod:fire_state": 0.0, "dragonradarmod:ice_state": 0.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/outline_active" },
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 0.0 }, "model": "dragonradarmod:item/frames/dormant/needle_basin_active" },
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 0.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/needle_outline_active" },
-    { "predicate": { "dragonradarmod:fire_state": 0.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/basin_outline_active" },
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/all_active" },
-    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active" },
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active" },
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active" },
-    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 1.0 }, "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active" },
-    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 1.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active" },
-    { "predicate": { "dragonradarmod:fire_state": 1.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active" },
-    { "predicate": { "dragonradarmod:fire_state": 2.0, "dragonradarmod:ice_state": 2.0, "dragonradarmod:lightning_state": 2.0 }, "model": "dragonradarmod:item/frames/dormant/all_purified" }
+    {
+      "predicate": {
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 0.0,
+        "dragonradarmod:lightning_state": 0.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_active"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:fire_state": 0.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 0.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_active"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:fire_state": 0.0,
+        "dragonradarmod:ice_state": 0.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_active"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 0.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_active"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 0.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_active"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:fire_state": 0.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_active"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_purified_rest_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_purified_rest_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/outline_purified_rest_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 1.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_basin_purified_outline_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 1.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/needle_outline_purified_basin_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 1.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/basin_outline_purified_needle_active_31"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_00"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.03125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_01"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.0625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_02"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.09375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_03"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_04"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.15625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_05"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.1875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_06"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.21875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_07"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.25,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_08"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.28125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_09"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.3125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_10"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.34375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_11"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_12"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.40625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_13"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.4375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_14"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.46875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_15"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_16"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.53125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_17"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.5625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_18"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.59375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_19"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_20"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.65625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_21"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.6875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_22"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.71875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_23"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.75,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_24"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.78125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_25"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.8125,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_26"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.84375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_27"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_28"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.90625,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_29"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.9375,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_30"
+    },
+    {
+      "predicate": {
+        "dragonradarmod:angle": 0.96875,
+        "dragonradarmod:fire_state": 2.0,
+        "dragonradarmod:ice_state": 2.0,
+        "dragonradarmod:lightning_state": 2.0
+      },
+      "model": "dragonradarmod:item/frames/dormant/all_purified_31"
+    }
   ]
 }

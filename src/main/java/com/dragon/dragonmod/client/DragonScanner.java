@@ -140,6 +140,12 @@ public class DragonScanner {
                         LightningRadarSettings.INSTANCE.globalResults.addAll(packet.dragons);
                         LightningRadarSettings.INSTANCE.hasPerformedSearch = true;
                         break;
+                    case "all":
+                    case "dormant":
+                        com.dragon.dragonmod.client.gui.dormant.DormantRadarSettings.INSTANCE.globalResults.clear();
+                        com.dragon.dragonmod.client.gui.dormant.DormantRadarSettings.INSTANCE.globalResults.addAll(packet.dragons);
+                        com.dragon.dragonmod.client.gui.dormant.DormantRadarSettings.INSTANCE.hasPerformedSearch = true;
+                        break;
                 }
                 DragonScanner.isSearchComplete = true;
             });

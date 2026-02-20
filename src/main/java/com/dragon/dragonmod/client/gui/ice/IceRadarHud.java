@@ -9,6 +9,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class IceRadarHud {
 
+    private static final int COLOR_ICE = 0xFF0023FF;
+
     @SubscribeEvent
     public void onRender(RenderGuiEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -40,7 +42,7 @@ public class IceRadarHud {
             int y = 10;
             
             gui.fill(x - 2, y - 2, x + 160, y + 42, 0x99000000);
-            gui.renderOutline(x - 2, y - 2, 162, 44, 0xFF00FF00);
+            gui.renderOutline(x - 2, y - 2, 162, 44, COLOR_ICE);  // BLUE
             
             String nameLine = target.type + " (Stage " + target.stage + ")";
             String cordLine = String.format("X: %d Y: %d Z: %d", (int)target.x, (int)target.y, (int)target.z);
