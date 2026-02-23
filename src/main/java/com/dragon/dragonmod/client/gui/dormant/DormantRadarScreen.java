@@ -23,8 +23,10 @@ public class DormantRadarScreen extends Screen {
     private static final int COLOR_ICE = 0xFF0023FF;       
     private static final int COLOR_FIRE = 0xFFFF0000;      
 
+    private final String[] dragonNames = {"Lightning Dragon", "Fire Dragon", "Ice Dragon"};
     private final String[] stageNames = {"Stage 4", "Stage 5"};
     
+    private boolean showDragonBox = false;
     private boolean showStageBox = false;
     
     private String selectedDragonEntry = null; 
@@ -64,6 +66,8 @@ public class DormantRadarScreen extends Screen {
         super(Component.literal("Dormant Dragon Radar (Limited Mode)"));
         if (DormantRadarSettings.INSTANCE.searchRadius <= 0 || DormantRadarSettings.INSTANCE.searchRadius > 15000) 
             DormantRadarSettings.INSTANCE.searchRadius = 7500;
+        if (DormantRadarSettings.INSTANCE.selectedDragons.isEmpty()) 
+            DormantRadarSettings.INSTANCE.selectedDragons.addAll(Arrays.asList(dragonNames));
         if (DormantRadarSettings.INSTANCE.selectedStages.isEmpty()) 
             DormantRadarSettings.INSTANCE.selectedStages.addAll(Arrays.asList(stageNames));
     }
@@ -94,6 +98,7 @@ public class DormantRadarScreen extends Screen {
         }
         
         return result.stream()
+            .filter(d -> DormantRadarSettings.INSTANCE.selectedDragons.contains(d.name))
             .filter(d -> DormantRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
             .sorted((d1, d2) -> {
                 boolean d1Tracked = d1.id.equals(currentlyTrackedDormant);
@@ -172,9 +177,12 @@ public class DormantRadarScreen extends Screen {
             }
         });
 
-        this.addRenderableWidget(new TransparentButton(10, 105, 110, 20, Component.literal("Filter: Stages"), b -> { showStageBox = !showStageBox; }));
+        this.addRenderableWidget(new TransparentButton(10, 105, 110, 20, Component.literal("Filter: Dragons"), b -> { showDragonBox = !showDragonBox; showStageBox = false; }));
+        this.addRenderableWidget(new TransparentButton(10, 130, 110, 20, Component.literal("Filter: Stages"), b -> { showStageBox = !showStageBox; showDragonBox = false; }));
 
-        this.addRenderableWidget(new TransparentButton(10, 130, 110, 20, Component.literal("Reset Filters"), b -> { 
+        this.addRenderableWidget(new TransparentButton(10, 155, 110, 20, Component.literal("Reset Filters"), b -> { 
+            DormantRadarSettings.INSTANCE.selectedDragons.clear();
+            DormantRadarSettings.INSTANCE.selectedDragons.addAll(Arrays.asList(dragonNames));
             DormantRadarSettings.INSTANCE.selectedStages.clear(); 
             DormantRadarSettings.INSTANCE.selectedStages.addAll(Arrays.asList(stageNames));
             DormantRadarSettings.INSTANCE.searchRadius = 7500; 
@@ -188,14 +196,14 @@ public class DormantRadarScreen extends Screen {
             }
         });
 
-        this.addRenderableWidget(new TransparentButton(10, 175, 110, 20, Component.literal(""), b -> DormantRadarSettings.INSTANCE.sortClosest = !DormantRadarSettings.INSTANCE.sortClosest) {
+        this.addRenderableWidget(new TransparentButton(10, 200, 110, 20, Component.literal(""), b -> DormantRadarSettings.INSTANCE.sortClosest = !DormantRadarSettings.INSTANCE.sortClosest) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(DormantRadarSettings.INSTANCE.sortClosest ? "Dist: Closest -> Far" : "Dist: Far -> Closest"));
                 super.renderWidget(gui, mx, my, pt);
             }
         });
 
-        this.radiusSlider = new TransparentSlider(10, 217, 110, 20, Component.literal("Radius: " + DormantRadarSettings.INSTANCE.searchRadius), (double) DormantRadarSettings.INSTANCE.searchRadius / 15000.0D) { 
+        this.radiusSlider = new TransparentSlider(10, 242, 110, 20, Component.literal("Radius: " + DormantRadarSettings.INSTANCE.searchRadius), (double) DormantRadarSettings.INSTANCE.searchRadius / 15000.0D) { 
             @Override protected void updateMessage() { DormantRadarSettings.INSTANCE.searchRadius = Math.max(100, Math.round(((int)(this.value * 15000.0D)) / 100.0f) * 100); this.setMessage(Component.literal("Radius: " + DormantRadarSettings.INSTANCE.searchRadius)); } 
             @Override protected void applyValue() { updateMessage(); } 
         };
@@ -226,8 +234,8 @@ public class DormantRadarScreen extends Screen {
         guiGraphics.drawString(this.font, "§7Purify to unlock Master Radar", 10, 20, 0x666666);
         
         guiGraphics.drawString(this.font, "Filters", 10, 93, 0xAAAAAA);
-        guiGraphics.drawString(this.font, "Sort", 10, 163, 0xAAAAAA);
-        guiGraphics.drawString(this.font, "Search Settings", 10, 205, 0xAAAAAA);
+        guiGraphics.drawString(this.font, "Sort", 10, 188, 0xAAAAAA);
+        guiGraphics.drawString(this.font, "Search Settings", 10, 230, 0xAAAAAA);
 
         int startX = 145 + 16; 
         int startY = 50; 
@@ -275,7 +283,8 @@ public class DormantRadarScreen extends Screen {
         }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        if (showStageBox) renderPopupBox(guiGraphics, stageNames, DormantRadarSettings.INSTANCE.selectedStages, 125, 105);
+        if (showDragonBox) renderPopupBox(guiGraphics, dragonNames, DormantRadarSettings.INSTANCE.selectedDragons, 125, 105);
+        if (showStageBox) renderPopupBox(guiGraphics, stageNames, DormantRadarSettings.INSTANCE.selectedStages, 125, 130);
     }
 
     private void renderDragonProfile(GuiGraphics gui, TrackedDragon d, int x, int y, boolean sel, boolean track, boolean hovered) {
@@ -301,24 +310,31 @@ public class DormantRadarScreen extends Screen {
         if (!hovered) gui.renderOutline(x - 2, y - 5, 172, 70, 0xFFFFFFFF);
     }
 
-    private void renderStatsBox(GuiGraphics gui, int x, int y) {
-        long ice = DormantRadarSettings.INSTANCE.globalResults.stream().filter(d -> d.type.contains("Ice")).count();
-        long fire = DormantRadarSettings.INSTANCE.globalResults.stream().filter(d -> d.type.contains("Fire")).count();
-        long lightning = DormantRadarSettings.INSTANCE.globalResults.stream().filter(d -> d.type.contains("Lightning")).count();
-        
-        PoseStack ps = gui.pose(); 
-        ps.pushPose(); 
-        ps.scale(0.85f, 0.85f, 1.0f);
-        int sx = (int)(x / 0.85f), sy = (int)(y / 0.85f);
-        
-        gui.drawString(this.font, "§nDRAGONS FOUND:", sx, sy, 0xFFFFFF);
-        gui.drawString(this.font, "Ice Dragons = " + ice, sx, sy + 15, COLOR_ICE);
-        gui.drawString(this.font, "Fire Dragons = " + fire, sx, sy + 27, COLOR_FIRE);
-        gui.drawString(this.font, "Lightning Dragons = " + lightning, sx, sy + 39, COLOR_LIGHTNING);
-        gui.drawString(this.font, "Total = " + DormantRadarSettings.INSTANCE.globalResults.size(), sx, sy + 55, 0xFFFFFF);
-        
-        ps.popPose();
-    }
+   private void renderStatsBox(GuiGraphics gui, int x, int y) {
+    // Count ONLY Stage 4-5 dragons (ignoring type filters, but filtering by stage)
+    long ice = DormantRadarSettings.INSTANCE.globalResults.stream()
+        .filter(d -> d.type.contains("Ice") && (d.stage == 4 || d.stage == 5))
+        .count();
+    long fire = DormantRadarSettings.INSTANCE.globalResults.stream()
+        .filter(d -> d.type.contains("Fire") && (d.stage == 4 || d.stage == 5))
+        .count();
+    long lightning = DormantRadarSettings.INSTANCE.globalResults.stream()
+        .filter(d -> d.type.contains("Lightning") && (d.stage == 4 || d.stage == 5))
+        .count();
+    
+    PoseStack ps = gui.pose(); 
+    ps.pushPose(); 
+    ps.scale(0.85f, 0.85f, 1.0f);
+    int sx = (int)(x / 0.85f), sy = (int)(y / 0.85f);
+    
+    gui.drawString(this.font, "§nDRAGONS FOUND:", sx, sy, 0xFFFFFF);
+    gui.drawString(this.font, "Ice Dragons = " + ice, sx, sy + 15, COLOR_ICE);
+    gui.drawString(this.font, "Fire Dragons = " + fire, sx, sy + 27, COLOR_FIRE);
+    gui.drawString(this.font, "Lightning Dragons = " + lightning, sx, sy + 39, COLOR_LIGHTNING);
+    gui.drawString(this.font, "Total = " + (ice + fire + lightning), sx, sy + 55, 0xFFFFFF);
+    
+    ps.popPose();
+}
 
     private boolean handlePopupClick(double mx, double my, String[] items, List<String> sel, int x, int y) { 
         int lh = items.length * 15; 
@@ -372,7 +388,8 @@ public class DormantRadarScreen extends Screen {
             } 
         } 
         
-        if (showStageBox && handlePopupClick(mx, my, stageNames, DormantRadarSettings.INSTANCE.selectedStages, 125, 105)) return true; 
+        if (showDragonBox && handlePopupClick(mx, my, dragonNames, DormantRadarSettings.INSTANCE.selectedDragons, 125, 105)) return true;
+        if (showStageBox && handlePopupClick(mx, my, stageNames, DormantRadarSettings.INSTANCE.selectedStages, 125, 130)) return true; 
         return super.mouseClicked(mx, my, b); 
     }
 

@@ -11,6 +11,9 @@ public class DormantRadarSettings {
     public List<DragonInfo> globalResults = new ArrayList<>();
     public boolean hasPerformedSearch = false;
     
+    // Dragon type filter
+    public List<String> selectedDragons = new ArrayList<>(Arrays.asList("Lightning Dragon", "Fire Dragon", "Ice Dragon"));
+    
     // Only Stage 4-5 available
     public List<String> selectedStages = new ArrayList<>(Arrays.asList("Stage 4", "Stage 5"));
     
