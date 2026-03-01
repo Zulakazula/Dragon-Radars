@@ -1,5 +1,6 @@
 package com.dragon.dragonmod.client.gui.fire;
 
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.client.DragonInfo;
 import com.dragon.dragonmod.client.DragonScanner;
 import com.dragon.dragonmod.client.GlobalRadarState;
@@ -11,17 +12,19 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+@OnlyIn(Dist.CLIENT)
 public class FireRadarScreen extends Screen {
 
-    private static final int COLOR_LIGHTNING = 0xFF9933FF; 
-    private static final int COLOR_ICE = 0xFF0023FF;       
-    private static final int COLOR_FIRE = 0xFFFF0000;      
+    private static final int COLOR_FIRE = 0xFFFF0000;
 
     private final String[] stageNames = {"Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5"};
     private final String[] genderNames = {"Male", "Female"};
@@ -29,18 +32,22 @@ public class FireRadarScreen extends Screen {
     private boolean showStageBox = false;
     private boolean showGenderBox = false;
     
-    private String selectedDragonEntry = null; 
+    private String selectedDragonEntry = null;
     private double scrollAmount = 0;
+    private double targetScrollAmount = 0;
+    private final double smoothScrollSpeed = 0.3;
     private boolean isDraggingScrollBar = false;
+    private double scrollBarDragOffset = 0;
     private final int scrollBarWidth = 6;
-    
-    public static String currentlyTrackedFire = null; 
 
     private boolean isWaitingForResults = false;
     private int serverWaitTimer = 0;
     private int resetFeedbackTicks = 0;
     private int refreshFeedbackTicks = 0;
     private TransparentSlider radiusSlider;
+    
+    private List<TrackedDragon> cachedFilteredList = null;
+    private int cachedFilterHash = 0;
 
     public static class TrackedDragon {
         public String name;
@@ -51,7 +58,7 @@ public class FireRadarScreen extends Screen {
         public double x, y, z;
 
         public TrackedDragon(DragonInfo info, int dist, int index) {
-            this.name = info.type; 
+            this.name = info.type;
             this.stage = info.stage;
             this.isMale = info.isMale;
             this.distance = dist;
@@ -64,26 +71,50 @@ public class FireRadarScreen extends Screen {
 
     public FireRadarScreen() {
         super(Component.literal("Fire Dragon Radar"));
-        if (FireRadarSettings.INSTANCE.searchRadius <= 0 || FireRadarSettings.INSTANCE.searchRadius > 15000) 
+        if (FireRadarSettings.INSTANCE.searchRadius <= 0 || FireRadarSettings.INSTANCE.searchRadius > 15000)
             FireRadarSettings.INSTANCE.searchRadius = 7500;
-        if (FireRadarSettings.INSTANCE.selectedStages.isEmpty()) 
+        if (FireRadarSettings.INSTANCE.selectedStages.isEmpty())
             FireRadarSettings.INSTANCE.selectedStages.addAll(Arrays.asList(stageNames));
-        if (FireRadarSettings.INSTANCE.selectedGenders.isEmpty()) 
+        if (FireRadarSettings.INSTANCE.selectedGenders.isEmpty())
             FireRadarSettings.INSTANCE.selectedGenders.addAll(Arrays.asList(genderNames));
     }
 
     private void performActualSearch() {
         if (this.minecraft.player == null) return;
         FireRadarSettings.INSTANCE.globalResults.clear();
-        FireRadarSettings.INSTANCE.hasPerformedSearch = false; 
+        FireRadarSettings.INSTANCE.hasPerformedSearch = false;
         DragonScanner.isSearchComplete = false;
         DragonScanner.requestServerSearch(FireRadarSettings.INSTANCE.searchRadius, "fire");
         this.isWaitingForResults = true;
-        this.serverWaitTimer = 340; 
+        this.serverWaitTimer = 340;
         this.scrollAmount = 0;
+        this.targetScrollAmount = 0;
+        this.cachedFilteredList = null;
     }
 
     private List<TrackedDragon> getFilteredList() {
+        int currentHash = Objects.hash(
+            FireRadarSettings.INSTANCE.selectedStages,
+            FireRadarSettings.INSTANCE.selectedGenders,
+            FireRadarSettings.INSTANCE.sortClosest,
+            FireRadarSettings.INSTANCE.globalResults.size()
+        );
+        
+        if (cachedFilteredList == null || cachedFilterHash != currentHash) {
+            cachedFilterHash = currentHash;
+            cachedFilteredList = calculateFilteredList();
+            
+            int maxScroll = getMaxScroll();
+            if (scrollAmount > maxScroll) {
+                scrollAmount = maxScroll;
+                targetScrollAmount = maxScroll;
+            }
+        }
+        
+        return cachedFilteredList;
+    }
+    
+    private List<TrackedDragon> calculateFilteredList() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return new ArrayList<>();
         
@@ -98,54 +129,68 @@ public class FireRadarScreen extends Screen {
         }
         
         return result.stream()
-            .filter(d -> d.name.contains("Fire"))
             .filter(d -> FireRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
             .filter(d -> FireRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
             .sorted((d1, d2) -> {
-                boolean d1Tracked = d1.id.equals(currentlyTrackedFire);
-                boolean d2Tracked = d2.id.equals(currentlyTrackedFire);
+                boolean d1Tracked = d1.id.equals(ClientRadarState.currentlyTrackedFire);
+                boolean d2Tracked = d2.id.equals(ClientRadarState.currentlyTrackedFire);
                 if (d1Tracked && !d2Tracked) return -1;
                 if (!d1Tracked && d2Tracked) return 1;
-        
-        // Then sort by distance
-                return FireRadarSettings.INSTANCE.sortClosest ? 
-                    Integer.compare(d1.distance, d2.distance) : 
+                return FireRadarSettings.INSTANCE.sortClosest ?
+                    Integer.compare(d1.distance, d2.distance) :
                     Integer.compare(d2.distance, d1.distance);
             })
-        .collect(Collectors.toList());
-        }
+            .collect(Collectors.toList());
+    }
 
     private int getMaxScroll() {
-        int listStartY = 50; 
+        int listStartY = 50;
         int totalRows = (int) Math.ceil(getFilteredList().size() / 2.0);
         int availableHeight = this.height - listStartY - 10;
         return Math.max(0, (totalRows * 85) - availableHeight);
+    }
+    
+    private int getScrollBarHeight(int listHeight) {
+        int maxScroll = getMaxScroll();
+        if (maxScroll == 0) return listHeight;
+        int totalContentHeight = listHeight + maxScroll;
+        return Math.max(20, (int)((float)listHeight / totalContentHeight * listHeight));
     }
 
     @Override
     protected void init() {
         this.addRenderableWidget(new TransparentButton(10, 40, 110, 20, Component.literal(""), b -> {
-            if (!FireRadarSettings.INSTANCE.hasPerformedSearch && !isWaitingForResults) performActualSearch();
+            if (!FireRadarSettings.INSTANCE.hasPerformedSearch && !isWaitingForResults) {
+                // Block if another radar is searching
+                if (DragonScanner.currentlySearchingRadar != null && !DragonScanner.currentlySearchingRadar.equals("fire")) {
+                    this.minecraft.player.displayClientMessage(
+                        Component.literal("§e⚠ Another radar is searching. Please wait..."),
+                        true
+                    );
+                    return;
+                }
+                performActualSearch();
+            }
             else if (isWaitingForResults) { this.isWaitingForResults = false; FireRadarSettings.INSTANCE.hasPerformedSearch = true; }
             else if (selectedDragonEntry != null) {
-                if (selectedDragonEntry.equals(currentlyTrackedFire)) {
-                    currentlyTrackedFire = null;
+                if (selectedDragonEntry.equals(ClientRadarState.currentlyTrackedFire)) {
+                    ClientRadarState.currentlyTrackedFire = null;
                     GlobalRadarState.stopTracking();
                 } else {
-                    com.dragon.dragonmod.client.gui.master.MasterRadarScreen.currentlyTrackedMaster = null;
-                    com.dragon.dragonmod.client.gui.ice.IceRadarScreen.currentlyTrackedIce = null;
-                    com.dragon.dragonmod.client.gui.lightning.LightningRadarScreen.currentlyTrackedLightning = null;
-                    com.dragon.dragonmod.client.gui.dormant.DormantRadarScreen.currentlyTrackedDormant = null;
-                    currentlyTrackedFire = selectedDragonEntry;
+                    ClientRadarState.currentlyTrackedMaster = null;
+                    ClientRadarState.currentlyTrackedIce = null;
+                    ClientRadarState.currentlyTrackedLightning = null;
+                    ClientRadarState.currentlyTrackedDormant = null;
+                    ClientRadarState.currentlyTrackedFire = selectedDragonEntry;
                     GlobalRadarState.startTracking("fire", selectedDragonEntry);
                     this.onClose();
                 }
-            } else if (currentlyTrackedFire != null) {
-                currentlyTrackedFire = null;
+            } else if (ClientRadarState.currentlyTrackedFire != null) {
+                ClientRadarState.currentlyTrackedFire = null;
                 GlobalRadarState.stopTracking();
-            } else { 
-                FireRadarSettings.INSTANCE.globalResults.clear(); 
-                FireRadarSettings.INSTANCE.hasPerformedSearch = false; 
+            } else {
+                FireRadarSettings.INSTANCE.globalResults.clear();
+                FireRadarSettings.INSTANCE.hasPerformedSearch = false;
             }
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
@@ -154,7 +199,7 @@ public class FireRadarScreen extends Screen {
                     label = "Stop Searching";
                 } else if (!FireRadarSettings.INSTANCE.hasPerformedSearch) {
                     label = "Start Search";
-                } else if (currentlyTrackedFire != null && (selectedDragonEntry == null || selectedDragonEntry.equals(currentlyTrackedFire))) {
+                } else if (ClientRadarState.currentlyTrackedFire != null && (selectedDragonEntry == null || selectedDragonEntry.equals(ClientRadarState.currentlyTrackedFire))) {
                     label = "Stop Tracking";
                 } else if (selectedDragonEntry != null) {
                     if (GlobalRadarState.isTracking() && !GlobalRadarState.isTrackingWith("fire")) {
@@ -171,7 +216,7 @@ public class FireRadarScreen extends Screen {
         });
 
         this.addRenderableWidget(new TransparentButton(10, 65, 110, 20, Component.literal("Refresh List"), b -> {
-            performActualSearch(); this.refreshFeedbackTicks = 40; currentlyTrackedFire = null; this.selectedDragonEntry = null;
+            performActualSearch(); this.refreshFeedbackTicks = 40; ClientRadarState.currentlyTrackedFire = null; this.selectedDragonEntry = null;
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(refreshFeedbackTicks > 0 ? "List Refreshed!" : "Refresh List"));
@@ -182,12 +227,13 @@ public class FireRadarScreen extends Screen {
         this.addRenderableWidget(new TransparentButton(10, 105, 110, 20, Component.literal("Filter: Stages"), b -> { showStageBox = !showStageBox; showGenderBox = false; }));
         this.addRenderableWidget(new TransparentButton(10, 130, 110, 20, Component.literal("Filter: Genders"), b -> { showGenderBox = !showGenderBox; showStageBox = false; }));
 
-        this.addRenderableWidget(new TransparentButton(10, 155, 110, 20, Component.literal("Reset Filters"), b -> { 
+        this.addRenderableWidget(new TransparentButton(10, 155, 110, 20, Component.literal("Reset Filters"), b -> {
             FireRadarSettings.INSTANCE.selectedStages.clear(); FireRadarSettings.INSTANCE.selectedStages.addAll(Arrays.asList(stageNames));
             FireRadarSettings.INSTANCE.selectedGenders.clear(); FireRadarSettings.INSTANCE.selectedGenders.addAll(Arrays.asList(genderNames));
             FireRadarSettings.INSTANCE.searchRadius = 7500; FireRadarSettings.INSTANCE.sortClosest = true;
             if (this.radiusSlider != null) this.radiusSlider.setValue(7500.0 / 15000.0);
-            this.resetFeedbackTicks = 40; 
+            this.resetFeedbackTicks = 40;
+            this.cachedFilteredList = null;
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(resetFeedbackTicks > 0 ? "Filters Reset!" : "Reset Filters"));
@@ -195,29 +241,32 @@ public class FireRadarScreen extends Screen {
             }
         });
 
-        this.addRenderableWidget(new TransparentButton(10, 200, 110, 20, Component.literal(""), b -> FireRadarSettings.INSTANCE.sortClosest = !FireRadarSettings.INSTANCE.sortClosest) {
+        this.addRenderableWidget(new TransparentButton(10, 200, 110, 20, Component.literal(""), b -> {
+            FireRadarSettings.INSTANCE.sortClosest = !FireRadarSettings.INSTANCE.sortClosest;
+            this.cachedFilteredList = null;
+        }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(FireRadarSettings.INSTANCE.sortClosest ? "Dist: Closest -> Far" : "Dist: Far -> Closest"));
                 super.renderWidget(gui, mx, my, pt);
             }
         });
 
-        this.radiusSlider = new TransparentSlider(10, 242, 110, 20, Component.literal("Radius: " + FireRadarSettings.INSTANCE.searchRadius), (double) FireRadarSettings.INSTANCE.searchRadius / 15000.0D) { 
-            @Override protected void updateMessage() { FireRadarSettings.INSTANCE.searchRadius = Math.max(100, Math.round(((int)(this.value * 15000.0D)) / 100.0f) * 100); this.setMessage(Component.literal("Radius: " + FireRadarSettings.INSTANCE.searchRadius)); } 
-            @Override protected void applyValue() { updateMessage(); } 
+        this.radiusSlider = new TransparentSlider(10, 242, 110, 20, Component.literal("Radius: " + FireRadarSettings.INSTANCE.searchRadius), (double) FireRadarSettings.INSTANCE.searchRadius / 15000.0D) {
+            @Override protected void updateMessage() { FireRadarSettings.INSTANCE.searchRadius = Math.max(100, Math.round(((int)(this.value * 15000.0D)) / 100.0f) * 100); this.setMessage(Component.literal("Radius: " + FireRadarSettings.INSTANCE.searchRadius)); }
+            @Override protected void applyValue() { updateMessage(); }
         };
         this.addRenderableWidget(this.radiusSlider);
 
         this.addRenderableWidget(new TransparentButton(this.width - 120, 10, 110, 20, Component.literal("Teleport"), b -> {
-            if (this.minecraft.player != null && currentlyTrackedFire != null) {
-                getFilteredList().stream().filter(d -> d.id.equals(currentlyTrackedFire)).findFirst().ifPresent(td -> {
+            if (this.minecraft.player != null && ClientRadarState.currentlyTrackedFire != null) {
+                getFilteredList().stream().filter(d -> d.id.equals(ClientRadarState.currentlyTrackedFire)).findFirst().ifPresent(td -> {
                     this.minecraft.player.connection.sendUnsignedCommand(String.format("tp @s %.1f %.1f %.1f", td.x, td.y, td.z));
                     this.onClose();
                 });
             }
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
-                this.active = minecraft.player != null && minecraft.player.isCreative() && currentlyTrackedFire != null;
+                this.active = minecraft.player != null && minecraft.player.isCreative() && ClientRadarState.currentlyTrackedFire != null;
                 super.renderWidget(gui, mx, my, pt);
             }
         });
@@ -227,15 +276,15 @@ public class FireRadarScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics); 
+        this.renderBackground(guiGraphics);
         guiGraphics.drawString(this.font, "Filters", 10, 93, 0xAAAAAA);
         guiGraphics.drawString(this.font, "Sort", 10, 188, 0xAAAAAA);
         guiGraphics.drawString(this.font, "Search Settings", 10, 230, 0xAAAAAA);
 
-        int startX = 145 + 16; 
-        int startY = 50; 
+        int startX = 145 + 16;
+        int startY = 50;
         int listHeight = this.height - startY - 10;
-        int scrollBarX = startX + 80 + (180 * 2) - 5; 
+        int scrollBarX = startX + 80 + (180 * 2) - 5;
 
         if (isWaitingForResults) {
             String dots = ".".repeat((int)((System.currentTimeMillis() / 300) % 4));
@@ -248,27 +297,47 @@ public class FireRadarScreen extends Screen {
             if (filtered.isEmpty() && FireRadarSettings.INSTANCE.hasPerformedSearch) {
                 guiGraphics.drawCenteredString(this.font, "No Dragons Found", startX + 80 + 180 - 10, this.height / 2, 0xFF5555);
             } else if (!filtered.isEmpty()) {
-                if (this.isDraggingScrollBar) this.scrollAmount = Mth.clamp((float)(mouseY - startY) / (float)listHeight, 0, 1) * getMaxScroll();
+                if (!this.isDraggingScrollBar) {
+                    this.scrollAmount += (this.targetScrollAmount - this.scrollAmount) * smoothScrollSpeed;
+                    if (Math.abs(this.targetScrollAmount - this.scrollAmount) < 0.1) {
+                        this.scrollAmount = this.targetScrollAmount;
+                    }
+                }
                 
                 PoseStack ps = guiGraphics.pose();
                 ps.pushPose();
                 guiGraphics.enableScissor(startX + 70, startY - 6, scrollBarX + 10, startY + listHeight);
                 ps.translate(0, -scrollAmount, 0);
 
-                for (int i = 0; i < filtered.size(); i++) {
+                int cardHeight = 85;
+                int cardsPerRow = 2;
+                int firstVisibleRow = Math.max(0, (int)((scrollAmount - 100) / cardHeight));
+                int lastVisibleRow = Math.min((int)Math.ceil(filtered.size() / 2.0), (int)((scrollAmount + listHeight + 100) / cardHeight) + 1);
+                
+                int firstVisibleIndex = firstVisibleRow * cardsPerRow;
+                int lastVisibleIndex = Math.min(filtered.size(), lastVisibleRow * cardsPerRow);
+
+                for (int i = firstVisibleIndex; i < lastVisibleIndex; i++) {
                     TrackedDragon d = filtered.get(i);
                     int rX = startX + 80 + ((i % 2) * 180);
-                    int rY = startY + ((i / 2) * 85); 
+                    int rY = startY + ((i / 2) * 85);
+                    
+                    if (rY - scrollAmount < startY - 100 || rY - scrollAmount > startY + listHeight + 100) {
+                        continue;
+                    }
+                    
                     boolean hover = mouseX >= rX && mouseX <= rX + 170 && (mouseY + scrollAmount) >= rY && (mouseY + scrollAmount) <= rY + 70;
                     if (d.id.equals(selectedDragonEntry)) guiGraphics.fill(rX - 2, rY - 5, rX + 170, rY + 65, 0x44FFFFFF);
-                    renderDragonProfile(guiGraphics, d, rX, rY, d.id.equals(selectedDragonEntry), d.id.equals(currentlyTrackedFire), hover);
+                    renderDragonProfile(guiGraphics, d, rX, rY, d.id.equals(selectedDragonEntry), d.id.equals(ClientRadarState.currentlyTrackedFire), hover);
                 }
+                
                 guiGraphics.disableScissor();
                 ps.popPose();
 
-                int barPos = (int)((getMaxScroll() <= 0) ? 0 : (scrollAmount / getMaxScroll()) * (listHeight - 40));
+                int scrollBarHeight = getScrollBarHeight(listHeight);
+                int barPos = (int)((getMaxScroll() <= 0) ? 0 : (scrollAmount / getMaxScroll()) * (listHeight - scrollBarHeight));
                 guiGraphics.fill(scrollBarX, startY, scrollBarX + scrollBarWidth, startY + listHeight, 0x44000000);
-                guiGraphics.fill(scrollBarX, startY + barPos, scrollBarX + scrollBarWidth, startY + barPos + 40, 0xFFFFFFFF);
+                guiGraphics.fill(scrollBarX, startY + barPos, scrollBarX + scrollBarWidth, startY + barPos + scrollBarHeight, 0xFFFFFFFF);
             }
         }
 
@@ -278,10 +347,9 @@ public class FireRadarScreen extends Screen {
     }
 
     private void renderDragonProfile(GuiGraphics gui, TrackedDragon d, int x, int y, boolean sel, boolean track, boolean hovered) {
-        int color = d.name.contains("Lightning") ? COLOR_LIGHTNING : (d.name.contains("Ice") ? COLOR_ICE : COLOR_FIRE);
         PoseStack ps = gui.pose(); ps.pushPose(); ps.scale(1.5f, 1.5f, 1.0f);
-        int finalColor = track ? 0xFF55FF55 : (sel ? 0xFFFFFF55 : color);
-        gui.drawString(this.font, (track ? ">> " : "") + d.name, (int)(x / 1.5f), (int)(y / 1.5f), finalColor);
+        int finalColor = track ? 0xFF55FF55 : (sel ? 0xFFFFFF55 : COLOR_FIRE);
+        gui.drawString(this.font, (track ? ">> " : "") + "Fire Dragon", (int)(x / 1.5f), (int)(y / 1.5f), finalColor);
         ps.pushPose(); ps.scale(0.66f, 0.66f, 1.0f);
         int tx = (int)((x/1.5f)/0.66f), ty = (int)((y/1.5f+12)/0.66f);
         gui.drawString(this.font, "Distance: " + d.distance + "m", tx, ty, 0xAAAAAA);
@@ -292,62 +360,120 @@ public class FireRadarScreen extends Screen {
     }
 
     private void renderStatsBox(GuiGraphics gui, int x, int y) {
-        long fire = FireRadarSettings.INSTANCE.globalResults.stream().filter(d -> d.type.contains("Fire")).count();
+        long total = FireRadarSettings.INSTANCE.globalResults.size();
         PoseStack ps = gui.pose(); ps.pushPose(); ps.scale(0.85f, 0.85f, 1.0f);
         int sx = (int)(x / 0.85f), sy = (int)(y / 0.85f);
         gui.drawString(this.font, "§nDRAGONS FOUND:", sx, sy, 0xFFFFFF);
-        gui.drawString(this.font, "Fire Dragons = " + fire, sx, sy + 15, COLOR_FIRE);
-        gui.drawString(this.font, "Total = " + fire, sx, sy + 27, 0xFFFFFF);
+        gui.drawString(this.font, "Fire Dragons = " + total, sx, sy + 15, COLOR_FIRE);
         ps.popPose();
     }
 
-    private boolean handlePopupClick(double mx, double my, String[] items, List<String> sel, int x, int y) { 
-        int lh = items.length * 15; 
-        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 10 && my <= y + lh + 22) { sel.clear(); sel.addAll(Arrays.asList(items)); return true; } 
-        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 25 && my <= y + lh + 37) { sel.clear(); return true; } 
-        for (int i = 0; i < items.length; i++) { 
-            if (mx >= x && mx <= x + 110 && my >= y + 5 + (i * 15) && my <= y + 5 + (i * 15) + 12) { 
-                if (sel.contains(items[i])) sel.remove(items[i]); else sel.add(items[i]); return true; 
-            } 
-        } return false; 
+    private boolean handlePopupClick(double mx, double my, String[] items, List<String> sel, int x, int y) {
+        int lh = items.length * 15;
+        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 10 && my <= y + lh + 22) { sel.clear(); sel.addAll(Arrays.asList(items)); this.cachedFilteredList = null; return true; }
+        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 25 && my <= y + lh + 37) { sel.clear(); this.cachedFilteredList = null; return true; }
+        for (int i = 0; i < items.length; i++) {
+            if (mx >= x && mx <= x + 110 && my >= y + 5 + (i * 15) && my <= y + 5 + (i * 15) + 12) {
+                if (sel.contains(items[i])) sel.remove(items[i]); else sel.add(items[i]);
+                this.cachedFilteredList = null;
+                return true;
+            }
+        } return false;
     }
 
-    private void renderPopupBox(GuiGraphics gui, String[] items, List<String> sel, int x, int y) { 
-        int lh = items.length * 15; gui.fill(x, y, x + 110, y + lh + 45, 0xEE000000); gui.renderOutline(x, y, 110, lh + 45, 0xFFFFFFFF); 
-        for (int i = 0; i < items.length; i++) { boolean s = sel.contains(items[i]); gui.drawString(this.font, (s ? "[X] " : "[ ] ") + items[i], x + 5, y + 5 + (i * 15), s ? 0xFF00FF00 : 0xFFFFFFFF); } 
-        gui.fill(x + 5, y + lh + 10, x + 105, y + lh + 22, 0x44FFFFFF); gui.drawString(this.font, "Select All", x + 10, y + lh + 12, 0xFFFFFF); 
-        gui.fill(x + 5, y + lh + 25, x + 105, y + lh + 37, 0x44FFFFFF); gui.drawString(this.font, "Deselect All", x + 10, y + lh + 27, 0xFFFFFF); 
+    private void renderPopupBox(GuiGraphics gui, String[] items, List<String> sel, int x, int y) {
+        int lh = items.length * 15; gui.fill(x, y, x + 110, y + lh + 45, 0xEE000000); gui.renderOutline(x, y, 110, lh + 45, 0xFFFFFFFF);
+        for (int i = 0; i < items.length; i++) { boolean s = sel.contains(items[i]); gui.drawString(this.font, (s ? "[X] " : "[ ] ") + items[i], x + 5, y + 5 + (i * 15), s ? 0xFF00FF00 : 0xFFFFFFFF); }
+        gui.fill(x + 5, y + lh + 10, x + 105, y + lh + 22, 0x44FFFFFF); gui.drawString(this.font, "Select All", x + 10, y + lh + 12, 0xFFFFFF);
+        gui.fill(x + 5, y + lh + 25, x + 105, y + lh + 37, 0x44FFFFFF); gui.drawString(this.font, "Deselect All", x + 10, y + lh + 27, 0xFFFFFF);
     }
 
-    private static class TransparentButton extends Button { 
-        public TransparentButton(int x, int y, int w, int h, Component lbl, OnPress prs) { super(x, y, w, h, lbl, prs, DEFAULT_NARRATION); } 
-        @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) { if (!isHovered && active) gui.renderOutline(getX(), getY(), width, height, 0xFFFFFFFF); gui.fill(getX(), getY(), getX() + width, getY() + height, (isHovered && active ? 180 : 200) / 2 << 24); gui.drawCenteredString(Minecraft.getInstance().font, getMessage(), getX() + width / 2, getY() + (height - 8) / 2, active ? 0xFFFFFFFF : 0xFF555555); } 
+    private static class TransparentButton extends Button {
+        public TransparentButton(int x, int y, int w, int h, Component lbl, OnPress prs) { super(x, y, w, h, lbl, prs, DEFAULT_NARRATION); }
+        @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) { if (!isHovered && active) gui.renderOutline(getX(), getY(), width, height, 0xFFFFFFFF); gui.fill(getX(), getY(), getX() + width, getY() + height, (isHovered && active ? 180 : 200) / 2 << 24); gui.drawCenteredString(Minecraft.getInstance().font, getMessage(), getX() + width / 2, getY() + (height - 8) / 2, active ? 0xFFFFFFFF : 0xFF555555); }
     }
 
-    private abstract static class TransparentSlider extends AbstractSliderButton { 
-        public TransparentSlider(int x, int y, int w, int h, Component t, double v) { super(x, y, w, h, t, v); } 
+    private abstract static class TransparentSlider extends AbstractSliderButton {
+        public TransparentSlider(int x, int y, int w, int h, Component t, double v) { super(x, y, w, h, t, v); }
         public void setValue(double nv) { this.value = Mth.clamp(nv, 0, 1); updateMessage(); }
-        @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) { gui.renderOutline(getX(), getY(), width, height, 0xAAFFFFFF); gui.fill(getX(), getY(), getX() + width, getY() + height, 0x44FFFFFF); int hW = 8; int hX = getX() + (int) (this.value * (double) (this.width - hW)); gui.fill(hX, getY(), hX + hW, getY() + height, 0xCCFFFFFF); gui.drawCenteredString(Minecraft.getInstance().font, getMessage(), getX() + width / 2, getY() + (height - 8) / 2, 0xFFFFFF); } 
+        @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) { gui.renderOutline(getX(), getY(), width, height, 0xAAFFFFFF); gui.fill(getX(), getY(), getX() + width, getY() + height, 0x44FFFFFF); int hW = 8; int hX = getX() + (int) (this.value * (double) (this.width - hW)); gui.fill(hX, getY(), hX + hW, getY() + height, 0xCCFFFFFF); gui.drawCenteredString(Minecraft.getInstance().font, getMessage(), getX() + width / 2, getY() + (height - 8) / 2, 0xFFFFFF); }
     }
 
-    @Override public boolean mouseClicked(double mx, double my, int b) { 
+    @Override
+    public boolean mouseClicked(double mx, double my, int b) {
         int startX = 145 + 16, lSY = 50, sBX = startX + 80 + (180 * 2) - 5, lH = this.height - lSY - 10;
-        if (!FireRadarSettings.INSTANCE.globalResults.isEmpty() && mx >= sBX - 5 && mx <= sBX + 15 && my >= lSY && my <= lSY + lH) { this.isDraggingScrollBar = true; return true; } 
-        if (!isWaitingForResults && mx > startX + 80) { List<TrackedDragon> f = getFilteredList(); for (int i = 0; i < f.size(); i++) { int rX = startX + 80 + ((i % 2) * 180), rY = lSY + ((i / 2) * 85); if (mx >= rX && mx <= rX + 170 && (my + scrollAmount) >= rY && (my + scrollAmount) <= rY + 70) { this.selectedDragonEntry = f.get(i).id.equals(selectedDragonEntry) ? null : f.get(i).id; return true; } } } 
-        if (showStageBox && handlePopupClick(mx, my, stageNames, FireRadarSettings.INSTANCE.selectedStages, 125, 105)) return true; 
-        if (showGenderBox && handlePopupClick(mx, my, genderNames, FireRadarSettings.INSTANCE.selectedGenders, 125, 130)) return true;
-        return super.mouseClicked(mx, my, b); 
-    }
-
-    @Override public void tick() { 
-        super.tick(); 
-        if (isWaitingForResults) {
-            if (!FireRadarSettings.INSTANCE.globalResults.isEmpty() || DragonScanner.isSearchComplete) { isWaitingForResults = false; FireRadarSettings.INSTANCE.hasPerformedSearch = true; } 
-            else { serverWaitTimer--; if (serverWaitTimer <= 0) { isWaitingForResults = false; FireRadarSettings.INSTANCE.hasPerformedSearch = true; } }
+        
+        int maxScroll = getMaxScroll();
+        if (maxScroll > 0 && !FireRadarSettings.INSTANCE.globalResults.isEmpty() && mx >= sBX - 5 && mx <= sBX + 15) {
+            int scrollBarHeight = getScrollBarHeight(lH);
+            int barPos = (int)((scrollAmount / maxScroll) * (lH - scrollBarHeight));
+            if (my >= lSY + barPos && my <= lSY + barPos + scrollBarHeight) {
+                this.isDraggingScrollBar = true;
+                this.scrollBarDragOffset = my - (lSY + barPos);
+                return true;
+            }
         }
-        if (resetFeedbackTicks > 0) resetFeedbackTicks--; if (refreshFeedbackTicks > 0) refreshFeedbackTicks--; 
+        
+        if (!isWaitingForResults && mx > startX + 80) {
+            List<TrackedDragon> f = getFilteredList();
+            for (int i = 0; i < f.size(); i++) {
+                int rX = startX + 80 + ((i % 2) * 180), rY = lSY + ((i / 2) * 85);
+                if (mx >= rX && mx <= rX + 170 && (my + scrollAmount) >= rY && (my + scrollAmount) <= rY + 70) {
+                    this.selectedDragonEntry = f.get(i).id.equals(selectedDragonEntry) ? null : f.get(i).id;
+                    return true;
+                }
+            }
+        }
+        
+        if (showStageBox && handlePopupClick(mx, my, stageNames, FireRadarSettings.INSTANCE.selectedStages, 125, 105)) return true;
+        if (showGenderBox && handlePopupClick(mx, my, genderNames, FireRadarSettings.INSTANCE.selectedGenders, 125, 130)) return true;
+        return super.mouseClicked(mx, my, b);
     }
     
-    @Override public boolean mouseReleased(double mx, double my, int b) { this.isDraggingScrollBar = false; return super.mouseReleased(mx, my, b); }
-    @Override public boolean mouseScrolled(double mx, double my, double d) { this.scrollAmount = Mth.clamp(this.scrollAmount - d * 25, 0, getMaxScroll()); return true; }
+    @Override
+    public void mouseMoved(double mx, double my) {
+        if (this.isDraggingScrollBar) {
+            int lSY = 50, lH = this.height - lSY - 10;
+            int scrollBarHeight = getScrollBarHeight(lH);
+            int maxScroll = getMaxScroll();
+            double relativePos = (my - scrollBarDragOffset - lSY) / (double)(lH - scrollBarHeight);
+            this.scrollAmount = Mth.clamp(relativePos * maxScroll, 0, maxScroll);
+            this.targetScrollAmount = this.scrollAmount;
+        }
+        super.mouseMoved(mx, my);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (isWaitingForResults) {
+            if (!FireRadarSettings.INSTANCE.globalResults.isEmpty()) {
+                isWaitingForResults = false;
+                FireRadarSettings.INSTANCE.hasPerformedSearch = true;
+            } else if (DragonScanner.isSearchComplete) {
+                isWaitingForResults = false;
+                FireRadarSettings.INSTANCE.hasPerformedSearch = true;
+            } else {
+                serverWaitTimer--;
+                if (serverWaitTimer <= 0) {
+                    isWaitingForResults = false;
+                    FireRadarSettings.INSTANCE.hasPerformedSearch = true;
+                }
+            }
+        }
+        if (resetFeedbackTicks > 0) resetFeedbackTicks--;
+        if (refreshFeedbackTicks > 0) refreshFeedbackTicks--;
+    }
+    
+    @Override
+    public boolean mouseReleased(double mx, double my, int b) {
+        this.isDraggingScrollBar = false;
+        return super.mouseReleased(mx, my, b);
+    }
+    
+    @Override
+    public boolean mouseScrolled(double mx, double my, double d) {
+        this.targetScrollAmount = Mth.clamp(this.targetScrollAmount - d * 25, 0, getMaxScroll());
+        return true;
+    }
 }

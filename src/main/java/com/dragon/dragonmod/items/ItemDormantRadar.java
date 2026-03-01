@@ -1,7 +1,6 @@
 package com.dragon.dragonmod.items;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -101,19 +100,20 @@ public class ItemDormantRadar extends Item {
 
     // --- USE METHOD (OPEN GUI WHEN FULLY MERGED) ---
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        
-        // Only open GUI if all merged (but not yet complete)
-        if (isAllMerged(stack) && !isComplete(stack)) {
-            if (level.isClientSide) {
-                Minecraft.getInstance().setScreen(new com.dragon.dragonmod.client.gui.dormant.DormantRadarScreen());
-            }
-            return InteractionResultHolder.success(stack);
+public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    ItemStack stack = player.getItemInHand(hand);
+    
+    // Only open GUI if all merged (but not yet complete)
+    if (isAllMerged(stack) && !isComplete(stack)) {
+        if (level.isClientSide) {
+            // Call client-only helper to avoid loading Screen class on server
+            com.dragon.dragonmod.client.ClientHelper.openDormantRadarScreen();
         }
-        
-        return InteractionResultHolder.pass(stack);
+        return InteractionResultHolder.success(stack);
     }
+    
+    return InteractionResultHolder.pass(stack);
+}
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag flag) {

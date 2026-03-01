@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dragonradarmod:item/lightning_radar/compass_00"
+  },
+  "overrides": [
+    { "predicate": { "dragonradarmod:angle": 0.00000 }, "model": "dragonradarmod:item/frames/lightning/compass_00" },
+    { "predicate": { "dragonradarmod:angle": 0.03125 }, "model": "dragonradarmod:item/frames/lightning/compass_01" },
+    { "predicate": { "dragonradarmod:angle": 0.06250 }, "model": "dragonradarmod:item/frames/lightning/compass_02" },
+    { "predicate": { "dragonradarmod:angle": 0.09375 }, "model": "dragonradarmod:item/frames/lightning/compass_03" },
+    { "predicate": { "dragonradarmod:angle": 0.12500 }, "model": "dragonradarmod:item/frames/lightning/compass_04" },
+    { "predicate": { "dragonradarmod:angle": 0.15625 }, "model": "dragonradarmod:item/frames/lightning/compass_05" },
+    { "predicate": { "dragonradarmod:angle": 0.18750 }, "model": "dragonradarmod:item/frames/lightning/compass_06" },
+    { "predicate": { "dragonradarmod:angle": 0.21875 }, "model": "dragonradarmod:item/frames/lightning/compass_07" },
+    { "predicate": { "dragonradarmod:angle": 0.25000 }, "model": "dragonradarmod:item/frames/lightning/compass_08" },
+    { "predicate": { "dragonradarmod:angle": 0.28125 }, "model": "dragonradarmod:item/frames/lightning/compass_09" },
+    { "predicate": { "dragonradarmod:angle": 0.31250 }, "model": "dragonradarmod:item/frames/lightning/compass_10" },
+    { "predicate": { "dragonradarmod:angle": 0.34375 }, "model": "dragonradarmod:item/frames/lightning/compass_11" },
+    { "predicate": { "dragonradarmod:angle": 0.37500 }, "model": "dragonradarmod:item/frames/lightning/compass_12" },
+    { "predicate": { "dragonradarmod:angle": 0.40625 }, "model": "dragonradarmod:item/frames/lightning/compass_13" },
+    { "predicate": { "dragonradarmod:angle": 0.43750 }, "model": "dragonradarmod:item/frames/lightning/compass_14" },
+    { "predicate": { "dragonradarmod:angle": 0.46875 }, "model": "dragonradarmod:item/frames/lightning/compass_15" },
+    { "predicate": { "dragonradarmod:angle": 0.50000 }, "model": "dragonradarmod:item/frames/lightning/compass_16" },
+    { "predicate": { "dragonradarmod:angle": 0.53125 }, "model": "dragonradarmod:item/frames/lightning/compass_17" },
+    { "predicate": { "dragonradarmod:angle": 0.56250 }, "model": "dragonradarmod:item/frames/lightning/compass_18" },
+    { "predicate": { "dragonradarmod:angle": 0.59375 }, "model": "dragonradarmod:item/frames/lightning/compass_19" },
+    { "predicate": { "dragonradarmod:angle": 0.62500 }, "model": "dragonradarmod:item/frames/lightning/compass_20" },
+    { "predicate": { "dragonradarmod:angle": 0.65625 }, "model": "dragonradarmod:item/frames/lightning/compass_21" },
+    { "predicate": { "dragonradarmod:angle": 0.68750 }, "model": "dragonradarmod:item/frames/lightning/compass_22" },
+    { "predicate": { "dragonradarmod:angle": 0.71875 }, "model": "dragonradarmod:item/frames/lightning/compass_23" },
+    { "predicate": { "dragonradarmod:angle": 0.75000 }, "model": "dragonradarmod:item/frames/lightning/compass_24" },
+    { "predicate": { "dragonradarmod:angle": 0.78125 }, "model": "dragonradarmod:item/frames/lightning/compass_25" },
+    { "predicate": { "dragonradarmod:angle": 0.81250 }, "model": "dragonradarmod:item/frames/lightning/compass_26" },
+    { "predicate": { "dragonradarmod:angle": 0.84375 }, "model": "dragonradarmod:item/frames/lightning/compass_27" },
+    { "predicate": { "dragonradarmod:angle": 0.87500 }, "model": "dragonradarmod:item/frames/lightning/compass_28" },
+    { "predicate": { "dragonradarmod:angle": 0.90625 }, "model": "dragonradarmod:item/frames/lightning/compass_29" },
+    { "predicate": { "dragonradarmod:angle": 0.93750 }, "model": "dragonradarmod:item/frames/lightning/compass_30" },
+    { "predicate": { "dragonradarmod:angle": 0.96875 }, "model": "dragonradarmod:item/frames/lightning/compass_31" }
+  ]
+}

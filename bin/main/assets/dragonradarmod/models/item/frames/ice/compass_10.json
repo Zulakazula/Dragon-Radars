@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dragonradarmod:item/ice_radar/compass_10"
+  }
+}

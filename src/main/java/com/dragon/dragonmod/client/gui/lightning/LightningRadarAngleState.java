@@ -1,5 +1,6 @@
 package com.dragon.dragonmod.client.gui.lightning;
 
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.client.DragonInfo;
 import javax.annotation.Nullable;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -13,7 +14,7 @@ public class LightningRadarAngleState {
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable Entity entity, int seed) {
         if (level == null || entity == null) return 0f;
 
-        String targetID = LightningRadarScreen.currentlyTrackedLightning;
+        String targetID = ClientRadarState.currentlyTrackedLightning;
         DragonInfo targetData = null;
         
         if (targetID != null) {

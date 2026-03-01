@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:location"
+    }
+  },
+  "rewards": {
+    "recipes": [
+  "dragonradarmod:dormant_radar_fil",
+  "dragonradarmod:dormant_radar_fli",
+  "dragonradarmod:dormant_radar_ifl",
+  "dragonradarmod:dormant_radar_ilf",
+  "dragonradarmod:dormant_radar_lfi",
+  "dragonradarmod:dormant_radar_lif",
+  "dragonradarmod:ice_radar",
+  "dragonradarmod:fire_radar",
+  "dragonradarmod:lightning_radar"
+]
+  }
+}

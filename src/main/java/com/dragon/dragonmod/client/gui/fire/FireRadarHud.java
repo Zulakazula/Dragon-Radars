@@ -1,5 +1,6 @@
 package com.dragon.dragonmod.client.gui.fire;
 
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.client.DragonInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,7 +20,7 @@ public class FireRadarHud {
         if (player == null || mc.options.hideGui) return;
         
         GuiGraphics gui = event.getGuiGraphics();
-        String targetID = FireRadarScreen.currentlyTrackedFire;
+        String targetID = ClientRadarState.currentlyTrackedFire;
         
         if (targetID == null) return;
         

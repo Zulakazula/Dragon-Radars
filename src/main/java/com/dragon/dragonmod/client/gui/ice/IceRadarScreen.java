@@ -1,9 +1,9 @@
 package com.dragon.dragonmod.client.gui.ice;
 
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.client.DragonInfo;
 import com.dragon.dragonmod.client.DragonScanner;
 import com.dragon.dragonmod.client.GlobalRadarState;
-import com.dragon.dragonmod.client.gui.fire.FireRadarSettings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,12 +12,16 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+@OnlyIn(Dist.CLIENT)
 public class IceRadarScreen extends Screen {
 
     private static final int COLOR_LIGHTNING = 0xFF9933FF; 
@@ -32,36 +36,41 @@ public class IceRadarScreen extends Screen {
     
     private String selectedDragonEntry = null; 
     private double scrollAmount = 0;
+    private double targetScrollAmount = 0;
+    private final double smoothScrollSpeed = 0.3;
     private boolean isDraggingScrollBar = false;
+    private double scrollBarDragOffset = 0;
     private final int scrollBarWidth = 6;
-    
-    public static String currentlyTrackedIce = null; 
 
     private boolean isWaitingForResults = false;
     private int serverWaitTimer = 0;
     private int resetFeedbackTicks = 0;
     private int refreshFeedbackTicks = 0;
     private TransparentSlider radiusSlider;
+    
+    // Cache for filtered list
+    private List<TrackedDragon> cachedFilteredList = null;
+    private int cachedFilterHash = 0;
 
     public static class TrackedDragon {
-    public String name;
-    public int stage;
-    public boolean isMale;
-    public int distance;
-    public String id;
-    public double x, y, z;
+        public String name;
+        public int stage;
+        public boolean isMale;
+        public int distance;
+        public String id;
+        public double x, y, z;
 
-    public TrackedDragon(DragonInfo info, int dist, int index) {
-        this.name = info.type; 
-        this.stage = info.stage;
-        this.isMale = info.isMale;
-        this.distance = dist;
-        this.x = info.x;
-        this.y = info.y;
-        this.z = info.z;    
-        this.id = this.name + "_S" + this.stage + "_X" + (int)info.x + "_Z" + (int)info.z;
+        public TrackedDragon(DragonInfo info, int dist, int index) {
+            this.name = info.type; 
+            this.stage = info.stage;
+            this.isMale = info.isMale;
+            this.distance = dist;
+            this.x = info.x;
+            this.y = info.y;
+            this.z = info.z;    
+            this.id = this.name + "_S" + this.stage + "_X" + (int)info.x + "_Z" + (int)info.z;
+        }
     }
-}
 
     public IceRadarScreen() {
         super(Component.literal("Ice Dragon Radar"));
@@ -82,9 +91,34 @@ public class IceRadarScreen extends Screen {
         this.isWaitingForResults = true;
         this.serverWaitTimer = 340; 
         this.scrollAmount = 0;
+        this.targetScrollAmount = 0;
+        this.cachedFilteredList = null;
     }
 
     private List<TrackedDragon> getFilteredList() {
+        int currentHash = Objects.hash(
+            IceRadarSettings.INSTANCE.selectedStages,
+            IceRadarSettings.INSTANCE.selectedGenders,
+            IceRadarSettings.INSTANCE.sortClosest,
+            IceRadarSettings.INSTANCE.globalResults.size()
+        );
+        
+        if (cachedFilteredList == null || cachedFilterHash != currentHash) {
+            cachedFilterHash = currentHash;
+            cachedFilteredList = calculateFilteredList();
+            
+            // Clamp scroll when filters change
+            int maxScroll = getMaxScroll();
+            if (scrollAmount > maxScroll) {
+                scrollAmount = maxScroll;
+                targetScrollAmount = maxScroll;
+            }
+        }
+        
+        return cachedFilteredList;
+    }
+    
+    private List<TrackedDragon> calculateFilteredList() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return new ArrayList<>();
         
@@ -100,21 +134,19 @@ public class IceRadarScreen extends Screen {
         
         return result.stream()
             .filter(d -> d.name.contains("Ice"))
-            .filter(d -> FireRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
-            .filter(d -> FireRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
+            .filter(d -> IceRadarSettings.INSTANCE.selectedStages.contains("Stage " + d.stage))
+            .filter(d -> IceRadarSettings.INSTANCE.selectedGenders.contains(d.isMale ? "Male" : "Female"))
             .sorted((d1, d2) -> {
-                boolean d1Tracked = d1.id.equals(currentlyTrackedIce);
-                boolean d2Tracked = d2.id.equals(currentlyTrackedIce);
+                boolean d1Tracked = d1.id.equals(ClientRadarState.currentlyTrackedIce);
+                boolean d2Tracked = d2.id.equals(ClientRadarState.currentlyTrackedIce);
                 if (d1Tracked && !d2Tracked) return -1;
                 if (!d1Tracked && d2Tracked) return 1;
-
-        // Then sort by distance
                 return IceRadarSettings.INSTANCE.sortClosest ? 
                     Integer.compare(d1.distance, d2.distance) : 
                     Integer.compare(d2.distance, d1.distance);
             })
-        .collect(Collectors.toList());
-        }
+            .collect(Collectors.toList());
+    }
 
     private int getMaxScroll() {
         int listStartY = 50; 
@@ -122,31 +154,48 @@ public class IceRadarScreen extends Screen {
         int availableHeight = this.height - listStartY - 10;
         return Math.max(0, (totalRows * 85) - availableHeight);
     }
+    
+    private int getScrollBarHeight(int listHeight) {
+        int maxScroll = getMaxScroll();
+        if (maxScroll == 0) return listHeight;
+        int totalContentHeight = listHeight + maxScroll;
+        return Math.max(20, (int)((float)listHeight / totalContentHeight * listHeight));
+    }
 
     @Override
     protected void init() {
         this.addRenderableWidget(new TransparentButton(10, 40, 110, 20, Component.literal(""), b -> {
-            if (!IceRadarSettings.INSTANCE.hasPerformedSearch && !isWaitingForResults) performActualSearch();
+            if (!IceRadarSettings.INSTANCE.hasPerformedSearch && !isWaitingForResults) {
+                // Block if another radar is searching
+                if (DragonScanner.currentlySearchingRadar != null && !DragonScanner.currentlySearchingRadar.equals("ice")) {
+                    this.minecraft.player.displayClientMessage(
+                        Component.literal("§e⚠ Another radar is searching. Please wait..."),
+                        true
+                    );
+                    return;
+                }
+                performActualSearch();
+            }
             else if (isWaitingForResults) { this.isWaitingForResults = false; IceRadarSettings.INSTANCE.hasPerformedSearch = true; }
             else if (selectedDragonEntry != null) {
-                if (selectedDragonEntry.equals(currentlyTrackedIce)) {
-                    currentlyTrackedIce = null;
+                if (selectedDragonEntry.equals(ClientRadarState.currentlyTrackedIce)) {
+                    ClientRadarState.currentlyTrackedIce = null;
                     GlobalRadarState.stopTracking();
                 } else {
-                    com.dragon.dragonmod.client.gui.master.MasterRadarScreen.currentlyTrackedMaster = null;
-                    com.dragon.dragonmod.client.gui.fire.FireRadarScreen.currentlyTrackedFire = null;
-                    com.dragon.dragonmod.client.gui.lightning.LightningRadarScreen.currentlyTrackedLightning = null;
-                    com.dragon.dragonmod.client.gui.dormant.DormantRadarScreen.currentlyTrackedDormant = null;
-                    currentlyTrackedIce = selectedDragonEntry;
+                    ClientRadarState.currentlyTrackedMaster = null;
+                    ClientRadarState.currentlyTrackedFire = null;
+                    ClientRadarState.currentlyTrackedLightning = null;
+                    ClientRadarState.currentlyTrackedDormant = null;
+                    ClientRadarState.currentlyTrackedIce = selectedDragonEntry;
                     GlobalRadarState.startTracking("ice", selectedDragonEntry);
                     this.onClose();
                 }
-            } else if (currentlyTrackedIce != null) {
-                currentlyTrackedIce = null;
+            } else if (ClientRadarState.currentlyTrackedIce != null) {
+                ClientRadarState.currentlyTrackedIce = null;
                 GlobalRadarState.stopTracking();
-            } else { 
-                IceRadarSettings.INSTANCE.globalResults.clear(); 
-                IceRadarSettings.INSTANCE.hasPerformedSearch = false; 
+            } else {
+                IceRadarSettings.INSTANCE.globalResults.clear();
+                IceRadarSettings.INSTANCE.hasPerformedSearch = false;
             }
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
@@ -155,7 +204,7 @@ public class IceRadarScreen extends Screen {
                     label = "Stop Searching";
                 } else if (!IceRadarSettings.INSTANCE.hasPerformedSearch) {
                     label = "Start Search";
-                } else if (currentlyTrackedIce != null && (selectedDragonEntry == null || selectedDragonEntry.equals(currentlyTrackedIce))) {
+                } else if (ClientRadarState.currentlyTrackedIce != null && (selectedDragonEntry == null || selectedDragonEntry.equals(ClientRadarState.currentlyTrackedIce))) {
                     label = "Stop Tracking";
                 } else if (selectedDragonEntry != null) {
                     if (GlobalRadarState.isTracking() && !GlobalRadarState.isTrackingWith("ice")) {
@@ -172,7 +221,7 @@ public class IceRadarScreen extends Screen {
         });
 
         this.addRenderableWidget(new TransparentButton(10, 65, 110, 20, Component.literal("Refresh List"), b -> {
-            performActualSearch(); this.refreshFeedbackTicks = 40; currentlyTrackedIce = null; this.selectedDragonEntry = null;
+            performActualSearch(); this.refreshFeedbackTicks = 40; ClientRadarState.currentlyTrackedIce = null; this.selectedDragonEntry = null;
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(refreshFeedbackTicks > 0 ? "List Refreshed!" : "Refresh List"));
@@ -188,7 +237,8 @@ public class IceRadarScreen extends Screen {
             IceRadarSettings.INSTANCE.selectedGenders.clear(); IceRadarSettings.INSTANCE.selectedGenders.addAll(Arrays.asList(genderNames));
             IceRadarSettings.INSTANCE.searchRadius = 7500; IceRadarSettings.INSTANCE.sortClosest = true;
             if (this.radiusSlider != null) this.radiusSlider.setValue(7500.0 / 15000.0);
-            this.resetFeedbackTicks = 40; 
+            this.resetFeedbackTicks = 40;
+            this.cachedFilteredList = null;
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(resetFeedbackTicks > 0 ? "Filters Reset!" : "Reset Filters"));
@@ -196,7 +246,10 @@ public class IceRadarScreen extends Screen {
             }
         });
 
-        this.addRenderableWidget(new TransparentButton(10, 200, 110, 20, Component.literal(""), b -> IceRadarSettings.INSTANCE.sortClosest = !IceRadarSettings.INSTANCE.sortClosest) {
+        this.addRenderableWidget(new TransparentButton(10, 200, 110, 20, Component.literal(""), b -> {
+            IceRadarSettings.INSTANCE.sortClosest = !IceRadarSettings.INSTANCE.sortClosest;
+            this.cachedFilteredList = null;
+        }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
                 this.setMessage(Component.literal(IceRadarSettings.INSTANCE.sortClosest ? "Dist: Closest -> Far" : "Dist: Far -> Closest"));
                 super.renderWidget(gui, mx, my, pt);
@@ -210,15 +263,15 @@ public class IceRadarScreen extends Screen {
         this.addRenderableWidget(this.radiusSlider);
 
         this.addRenderableWidget(new TransparentButton(this.width - 120, 10, 110, 20, Component.literal("Teleport"), b -> {
-            if (this.minecraft.player != null && currentlyTrackedIce != null) {
-                getFilteredList().stream().filter(d -> d.id.equals(currentlyTrackedIce)).findFirst().ifPresent(td -> {
+            if (this.minecraft.player != null && ClientRadarState.currentlyTrackedIce != null) {
+                getFilteredList().stream().filter(d -> d.id.equals(ClientRadarState.currentlyTrackedIce)).findFirst().ifPresent(td -> {
                     this.minecraft.player.connection.sendUnsignedCommand(String.format("tp @s %.1f %.1f %.1f", td.x, td.y, td.z));
                     this.onClose();
                 });
             }
         }) {
             @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) {
-                this.active = minecraft.player != null && minecraft.player.isCreative() && currentlyTrackedIce != null;
+                this.active = minecraft.player != null && minecraft.player.isCreative() && ClientRadarState.currentlyTrackedIce != null;
                 super.renderWidget(gui, mx, my, pt);
             }
         });
@@ -249,27 +302,47 @@ public class IceRadarScreen extends Screen {
             if (filtered.isEmpty() && IceRadarSettings.INSTANCE.hasPerformedSearch) {
                 guiGraphics.drawCenteredString(this.font, "No Dragons Found", startX + 80 + 180 - 10, this.height / 2, 0xFF5555);
             } else if (!filtered.isEmpty()) {
-                if (this.isDraggingScrollBar) this.scrollAmount = Mth.clamp((float)(mouseY - startY) / (float)listHeight, 0, 1) * getMaxScroll();
+                if (!this.isDraggingScrollBar) {
+                    this.scrollAmount += (this.targetScrollAmount - this.scrollAmount) * smoothScrollSpeed;
+                    if (Math.abs(this.targetScrollAmount - this.scrollAmount) < 0.1) {
+                        this.scrollAmount = this.targetScrollAmount;
+                    }
+                }
                 
                 PoseStack ps = guiGraphics.pose();
                 ps.pushPose();
                 guiGraphics.enableScissor(startX + 70, startY - 6, scrollBarX + 10, startY + listHeight);
                 ps.translate(0, -scrollAmount, 0);
 
-                for (int i = 0; i < filtered.size(); i++) {
+                int cardHeight = 85;
+                int cardsPerRow = 2;
+                int firstVisibleRow = Math.max(0, (int)((scrollAmount - 100) / cardHeight));
+                int lastVisibleRow = Math.min((int)Math.ceil(filtered.size() / 2.0), (int)((scrollAmount + listHeight + 100) / cardHeight) + 1);
+                
+                int firstVisibleIndex = firstVisibleRow * cardsPerRow;
+                int lastVisibleIndex = Math.min(filtered.size(), lastVisibleRow * cardsPerRow);
+
+                for (int i = firstVisibleIndex; i < lastVisibleIndex; i++) {
                     TrackedDragon d = filtered.get(i);
                     int rX = startX + 80 + ((i % 2) * 180);
-                    int rY = startY + ((i / 2) * 85); 
+                    int rY = startY + ((i / 2) * 85);
+                    
+                    if (rY - scrollAmount < startY - 100 || rY - scrollAmount > startY + listHeight + 100) {
+                        continue;
+                    }
+                    
                     boolean hover = mouseX >= rX && mouseX <= rX + 170 && (mouseY + scrollAmount) >= rY && (mouseY + scrollAmount) <= rY + 70;
                     if (d.id.equals(selectedDragonEntry)) guiGraphics.fill(rX - 2, rY - 5, rX + 170, rY + 65, 0x44FFFFFF);
-                    renderDragonProfile(guiGraphics, d, rX, rY, d.id.equals(selectedDragonEntry), d.id.equals(currentlyTrackedIce), hover);
+                    renderDragonProfile(guiGraphics, d, rX, rY, d.id.equals(selectedDragonEntry), d.id.equals(ClientRadarState.currentlyTrackedIce), hover);
                 }
+                
                 guiGraphics.disableScissor();
                 ps.popPose();
 
-                int barPos = (int)((getMaxScroll() <= 0) ? 0 : (scrollAmount / getMaxScroll()) * (listHeight - 40));
+                int scrollBarHeight = getScrollBarHeight(listHeight);
+                int barPos = (int)((getMaxScroll() <= 0) ? 0 : (scrollAmount / getMaxScroll()) * (listHeight - scrollBarHeight));
                 guiGraphics.fill(scrollBarX, startY, scrollBarX + scrollBarWidth, startY + listHeight, 0x44000000);
-                guiGraphics.fill(scrollBarX, startY + barPos, scrollBarX + scrollBarWidth, startY + barPos + 40, 0xFFFFFFFF);
+                guiGraphics.fill(scrollBarX, startY + barPos, scrollBarX + scrollBarWidth, startY + barPos + scrollBarHeight, 0xFFFFFFFF);
             }
         }
 
@@ -298,17 +371,18 @@ public class IceRadarScreen extends Screen {
         int sx = (int)(x / 0.85f), sy = (int)(y / 0.85f);
         gui.drawString(this.font, "§nDRAGONS FOUND:", sx, sy, 0xFFFFFF);
         gui.drawString(this.font, "Ice Dragons = " + ice, sx, sy + 15, COLOR_ICE);
-        gui.drawString(this.font, "Total = " + ice, sx, sy + 27, 0xFFFFFF);
         ps.popPose();
     }
 
     private boolean handlePopupClick(double mx, double my, String[] items, List<String> sel, int x, int y) { 
         int lh = items.length * 15; 
-        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 10 && my <= y + lh + 22) { sel.clear(); sel.addAll(Arrays.asList(items)); return true; } 
-        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 25 && my <= y + lh + 37) { sel.clear(); return true; } 
+        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 10 && my <= y + lh + 22) { sel.clear(); sel.addAll(Arrays.asList(items)); this.cachedFilteredList = null; return true; } 
+        if (mx >= x + 5 && mx <= x + 105 && my >= y + lh + 25 && my <= y + lh + 37) { sel.clear(); this.cachedFilteredList = null; return true; } 
         for (int i = 0; i < items.length; i++) { 
             if (mx >= x && mx <= x + 110 && my >= y + 5 + (i * 15) && my <= y + 5 + (i * 15) + 12) { 
-                if (sel.contains(items[i])) sel.remove(items[i]); else sel.add(items[i]); return true; 
+                if (sel.contains(items[i])) sel.remove(items[i]); else sel.add(items[i]); 
+                this.cachedFilteredList = null;
+                return true; 
             } 
         } return false; 
     }
@@ -331,24 +405,81 @@ public class IceRadarScreen extends Screen {
         @Override public void renderWidget(GuiGraphics gui, int mx, int my, float pt) { gui.renderOutline(getX(), getY(), width, height, 0xAAFFFFFF); gui.fill(getX(), getY(), getX() + width, getY() + height, 0x44FFFFFF); int hW = 8; int hX = getX() + (int) (this.value * (double) (this.width - hW)); gui.fill(hX, getY(), hX + hW, getY() + height, 0xCCFFFFFF); gui.drawCenteredString(Minecraft.getInstance().font, getMessage(), getX() + width / 2, getY() + (height - 8) / 2, 0xFFFFFF); } 
     }
 
-    @Override public boolean mouseClicked(double mx, double my, int b) { 
+    @Override 
+    public boolean mouseClicked(double mx, double my, int b) { 
         int startX = 145 + 16, lSY = 50, sBX = startX + 80 + (180 * 2) - 5, lH = this.height - lSY - 10;
-        if (!IceRadarSettings.INSTANCE.globalResults.isEmpty() && mx >= sBX - 5 && mx <= sBX + 15 && my >= lSY && my <= lSY + lH) { this.isDraggingScrollBar = true; return true; } 
-        if (!isWaitingForResults && mx > startX + 80) { List<TrackedDragon> f = getFilteredList(); for (int i = 0; i < f.size(); i++) { int rX = startX + 80 + ((i % 2) * 180), rY = lSY + ((i / 2) * 85); if (mx >= rX && mx <= rX + 170 && (my + scrollAmount) >= rY && (my + scrollAmount) <= rY + 70) { this.selectedDragonEntry = f.get(i).id.equals(selectedDragonEntry) ? null : f.get(i).id; return true; } } } 
+        
+        int maxScroll = getMaxScroll();
+        if (maxScroll > 0 && !IceRadarSettings.INSTANCE.globalResults.isEmpty() && mx >= sBX - 5 && mx <= sBX + 15) {
+            int scrollBarHeight = getScrollBarHeight(lH);
+            int barPos = (int)((scrollAmount / maxScroll) * (lH - scrollBarHeight));
+            if (my >= lSY + barPos && my <= lSY + barPos + scrollBarHeight) {
+                this.isDraggingScrollBar = true;
+                this.scrollBarDragOffset = my - (lSY + barPos);
+                return true;
+            }
+        }
+        
+        if (!isWaitingForResults && mx > startX + 80) { 
+            List<TrackedDragon> f = getFilteredList(); 
+            for (int i = 0; i < f.size(); i++) { 
+                int rX = startX + 80 + ((i % 2) * 180), rY = lSY + ((i / 2) * 85); 
+                if (mx >= rX && mx <= rX + 170 && (my + scrollAmount) >= rY && (my + scrollAmount) <= rY + 70) { 
+                    this.selectedDragonEntry = f.get(i).id.equals(selectedDragonEntry) ? null : f.get(i).id; 
+                    return true; 
+                } 
+            } 
+        } 
+        
         if (showStageBox && handlePopupClick(mx, my, stageNames, IceRadarSettings.INSTANCE.selectedStages, 125, 105)) return true; 
         if (showGenderBox && handlePopupClick(mx, my, genderNames, IceRadarSettings.INSTANCE.selectedGenders, 125, 130)) return true;
         return super.mouseClicked(mx, my, b); 
     }
+    
+    @Override
+    public void mouseMoved(double mx, double my) {
+        if (this.isDraggingScrollBar) {
+            int lSY = 50, lH = this.height - lSY - 10;
+            int scrollBarHeight = getScrollBarHeight(lH);
+            int maxScroll = getMaxScroll();
+            double relativePos = (my - scrollBarDragOffset - lSY) / (double)(lH - scrollBarHeight);
+            this.scrollAmount = Mth.clamp(relativePos * maxScroll, 0, maxScroll);
+            this.targetScrollAmount = this.scrollAmount;
+        }
+        super.mouseMoved(mx, my);
+    }
 
-    @Override public void tick() { 
+    @Override 
+    public void tick() { 
         super.tick(); 
         if (isWaitingForResults) {
-            if (!IceRadarSettings.INSTANCE.globalResults.isEmpty() || DragonScanner.isSearchComplete) { isWaitingForResults = false; IceRadarSettings.INSTANCE.hasPerformedSearch = true; } 
-            else { serverWaitTimer--; if (serverWaitTimer <= 0) { isWaitingForResults = false; IceRadarSettings.INSTANCE.hasPerformedSearch = true; } }
+            if (!IceRadarSettings.INSTANCE.globalResults.isEmpty()) {
+                isWaitingForResults = false;
+                IceRadarSettings.INSTANCE.hasPerformedSearch = true;
+            } else if (DragonScanner.isSearchComplete) {
+                isWaitingForResults = false;
+                IceRadarSettings.INSTANCE.hasPerformedSearch = true;
+            } else {
+                serverWaitTimer--;
+                if (serverWaitTimer <= 0) {
+                    isWaitingForResults = false;
+                    IceRadarSettings.INSTANCE.hasPerformedSearch = true;
+                }
+            }
         }
-        if (resetFeedbackTicks > 0) resetFeedbackTicks--; if (refreshFeedbackTicks > 0) refreshFeedbackTicks--; 
+        if (resetFeedbackTicks > 0) resetFeedbackTicks--; 
+        if (refreshFeedbackTicks > 0) refreshFeedbackTicks--; 
     }
     
-    @Override public boolean mouseReleased(double mx, double my, int b) { this.isDraggingScrollBar = false; return super.mouseReleased(mx, my, b); }
-    @Override public boolean mouseScrolled(double mx, double my, double d) { this.scrollAmount = Mth.clamp(this.scrollAmount - d * 25, 0, getMaxScroll()); return true; }
+    @Override 
+    public boolean mouseReleased(double mx, double my, int b) { 
+        this.isDraggingScrollBar = false; 
+        return super.mouseReleased(mx, my, b); 
+    }
+    
+    @Override 
+    public boolean mouseScrolled(double mx, double my, double d) { 
+        this.targetScrollAmount = Mth.clamp(this.targetScrollAmount - d * 25, 0, getMaxScroll()); 
+        return true; 
+    }
 }

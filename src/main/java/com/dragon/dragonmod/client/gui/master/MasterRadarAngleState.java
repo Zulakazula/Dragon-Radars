@@ -1,5 +1,6 @@
 package com.dragon.dragonmod.client.gui.master;
 
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.client.DragonInfo;
 import javax.annotation.Nullable;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -13,7 +14,7 @@ public class MasterRadarAngleState {
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable Entity entity, int seed) {
         if (level == null || entity == null) return 0f;
 
-        String targetID = MasterRadarScreen.currentlyTrackedMaster;
+        String targetID = ClientRadarState.currentlyTrackedMaster;
         DragonInfo targetData = null;
         
         if (targetID != null) {

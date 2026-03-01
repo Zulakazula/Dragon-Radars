@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 public class DragonScanner {
 
     public static boolean isSearchComplete = false;
+    public static String currentlySearchingRadar = null;
 
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
@@ -148,12 +149,14 @@ public class DragonScanner {
                         break;
                 }
                 DragonScanner.isSearchComplete = true;
+                DragonScanner.currentlySearchingRadar = null; // Clear the flag when search completes
             });
             ctx.get().setPacketHandled(true);
         }
     }
 
     public static void requestServerSearch(double radius, String radarType) {
+        currentlySearchingRadar = radarType; // Set the flag when search starts
         isSearchComplete = false;
         CHANNEL.sendToServer(new RequestDragonsPacket(radius, radarType));
     }

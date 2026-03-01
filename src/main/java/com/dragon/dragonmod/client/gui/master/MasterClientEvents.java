@@ -2,6 +2,7 @@ package com.dragon.dragonmod.client.gui.master;
 
 import com.dragon.dragonmod.DragonRadarMod;
 import com.dragon.dragonmod.ModItems;
+import com.dragon.dragonmod.client.ClientRadarState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ public class MasterClientEvents {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
-        if (player == null || MasterRadarScreen.currentlyTrackedMaster == null) return;
+        if (player == null || ClientRadarState.currentlyTrackedMaster == null) return;
 
         boolean hasRadar = false;
 
@@ -45,7 +46,7 @@ public class MasterClientEvents {
         }
 
         if (!hasRadar) {
-            MasterRadarScreen.currentlyTrackedMaster = null;
+            ClientRadarState.currentlyTrackedMaster = null;
             player.displayClientMessage(
                 Component.literal("§cRadar Signal Lost: Master Radar removed from inventory."),
                 true

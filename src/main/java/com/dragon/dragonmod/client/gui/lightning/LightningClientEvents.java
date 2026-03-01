@@ -2,6 +2,7 @@ package com.dragon.dragonmod.client.gui.lightning;
 
 import com.dragon.dragonmod.DragonRadarMod;
 import com.dragon.dragonmod.ModItems;
+import com.dragon.dragonmod.client.ClientRadarState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ public class LightningClientEvents {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
-        if (player == null || LightningRadarScreen.currentlyTrackedLightning == null) return;
+        if (player == null || ClientRadarState.currentlyTrackedLightning == null) return;
 
         boolean hasRadar = false;
 
@@ -45,7 +46,7 @@ public class LightningClientEvents {
         }
 
         if (!hasRadar) {
-            LightningRadarScreen.currentlyTrackedLightning = null;
+            ClientRadarState.currentlyTrackedLightning = null;
             player.displayClientMessage(
                 Component.literal("§cRadar Signal Lost: Lightning Radar removed from inventory."),
                 true

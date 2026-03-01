@@ -2,6 +2,7 @@ package com.dragon.dragonmod.client.gui.fire;
 
 import com.dragon.dragonmod.DragonRadarMod;
 import com.dragon.dragonmod.ModItems;
+import com.dragon.dragonmod.client.ClientRadarState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ public class FireClientEvents {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
-        if (player == null || FireRadarScreen.currentlyTrackedFire == null) return;
+        if (player == null || ClientRadarState.currentlyTrackedFire == null) return;
 
         boolean hasRadar = false;
 
@@ -45,7 +46,7 @@ public class FireClientEvents {
         }
 
         if (!hasRadar) {
-            FireRadarScreen.currentlyTrackedFire = null;
+            ClientRadarState.currentlyTrackedFire = null;
             player.displayClientMessage(
                 Component.literal("§cRadar Signal Lost: Fire Radar removed from inventory."),
                 true

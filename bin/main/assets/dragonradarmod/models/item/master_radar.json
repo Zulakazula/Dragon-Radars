@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dragonradarmod:item/master_radar/dragon_radar_00"
+  },
+  "overrides": [
+    { "predicate": { "dragonradarmod:angle": 0.00000 }, "model": "dragonradarmod:item/frames/master/dragon_radar_00" },
+    { "predicate": { "dragonradarmod:angle": 0.03125 }, "model": "dragonradarmod:item/frames/master/dragon_radar_01" },
+    { "predicate": { "dragonradarmod:angle": 0.06250 }, "model": "dragonradarmod:item/frames/master/dragon_radar_02" },
+    { "predicate": { "dragonradarmod:angle": 0.09375 }, "model": "dragonradarmod:item/frames/master/dragon_radar_03" },
+    { "predicate": { "dragonradarmod:angle": 0.12500 }, "model": "dragonradarmod:item/frames/master/dragon_radar_04" },
+    { "predicate": { "dragonradarmod:angle": 0.15625 }, "model": "dragonradarmod:item/frames/master/dragon_radar_05" },
+    { "predicate": { "dragonradarmod:angle": 0.18750 }, "model": "dragonradarmod:item/frames/master/dragon_radar_06" },
+    { "predicate": { "dragonradarmod:angle": 0.21875 }, "model": "dragonradarmod:item/frames/master/dragon_radar_07" },
+    { "predicate": { "dragonradarmod:angle": 0.25000 }, "model": "dragonradarmod:item/frames/master/dragon_radar_08" },
+    { "predicate": { "dragonradarmod:angle": 0.28125 }, "model": "dragonradarmod:item/frames/master/dragon_radar_09" },
+    { "predicate": { "dragonradarmod:angle": 0.31250 }, "model": "dragonradarmod:item/frames/master/dragon_radar_10" },
+    { "predicate": { "dragonradarmod:angle": 0.34375 }, "model": "dragonradarmod:item/frames/master/dragon_radar_11" },
+    { "predicate": { "dragonradarmod:angle": 0.37500 }, "model": "dragonradarmod:item/frames/master/dragon_radar_12" },
+    { "predicate": { "dragonradarmod:angle": 0.40625 }, "model": "dragonradarmod:item/frames/master/dragon_radar_13" },
+    { "predicate": { "dragonradarmod:angle": 0.43750 }, "model": "dragonradarmod:item/frames/master/dragon_radar_14" },
+    { "predicate": { "dragonradarmod:angle": 0.46875 }, "model": "dragonradarmod:item/frames/master/dragon_radar_15" },
+    { "predicate": { "dragonradarmod:angle": 0.50000 }, "model": "dragonradarmod:item/frames/master/dragon_radar_16" },
+    { "predicate": { "dragonradarmod:angle": 0.53125 }, "model": "dragonradarmod:item/frames/master/dragon_radar_17" },
+    { "predicate": { "dragonradarmod:angle": 0.56250 }, "model": "dragonradarmod:item/frames/master/dragon_radar_18" },
+    { "predicate": { "dragonradarmod:angle": 0.59375 }, "model": "dragonradarmod:item/frames/master/dragon_radar_19" },
+    { "predicate": { "dragonradarmod:angle": 0.62500 }, "model": "dragonradarmod:item/frames/master/dragon_radar_20" },
+    { "predicate": { "dragonradarmod:angle": 0.65625 }, "model": "dragonradarmod:item/frames/master/dragon_radar_21" },
+    { "predicate": { "dragonradarmod:angle": 0.68750 }, "model": "dragonradarmod:item/frames/master/dragon_radar_22" },
+    { "predicate": { "dragonradarmod:angle": 0.71875 }, "model": "dragonradarmod:item/frames/master/dragon_radar_23" },
+    { "predicate": { "dragonradarmod:angle": 0.75000 }, "model": "dragonradarmod:item/frames/master/dragon_radar_24" },
+    { "predicate": { "dragonradarmod:angle": 0.78125 }, "model": "dragonradarmod:item/frames/master/dragon_radar_25" },
+    { "predicate": { "dragonradarmod:angle": 0.81250 }, "model": "dragonradarmod:item/frames/master/dragon_radar_26" },
+    { "predicate": { "dragonradarmod:angle": 0.84375 }, "model": "dragonradarmod:item/frames/master/dragon_radar_27" },
+    { "predicate": { "dragonradarmod:angle": 0.87500 }, "model": "dragonradarmod:item/frames/master/dragon_radar_28" },
+    { "predicate": { "dragonradarmod:angle": 0.90625 }, "model": "dragonradarmod:item/frames/master/dragon_radar_29" },
+    { "predicate": { "dragonradarmod:angle": 0.93750 }, "model": "dragonradarmod:item/frames/master/dragon_radar_30" },
+    { "predicate": { "dragonradarmod:angle": 0.96875 }, "model": "dragonradarmod:item/frames/master/dragon_radar_31" }
+  ]
+}

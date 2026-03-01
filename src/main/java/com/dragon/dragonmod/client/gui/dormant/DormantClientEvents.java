@@ -2,6 +2,7 @@ package com.dragon.dragonmod.client.gui.dormant;
 
 import com.dragon.dragonmod.DragonRadarMod;
 import com.dragon.dragonmod.ModItems;
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.items.ItemDormantRadar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -84,7 +85,7 @@ public class DormantClientEvents {
             Minecraft mc = Minecraft.getInstance();
             Player player = mc.player;
 
-            if (player == null || DormantRadarScreen.currentlyTrackedDormant == null) return;
+            if (player == null || ClientRadarState.currentlyTrackedDormant == null) return;
 
             boolean hasRadar = false;
             boolean radarIsComplete = false;
@@ -113,13 +114,13 @@ public class DormantClientEvents {
 
             // Stop tracking if radar is removed OR if it's now complete
             if (!hasRadar) {
-                DormantRadarScreen.currentlyTrackedDormant = null;
+                ClientRadarState.currentlyTrackedDormant = null;
                 player.displayClientMessage(
                     Component.literal("§cRadar Signal Lost: Dormant Radar removed from inventory."),
                     true
                 );
             } else if (radarIsComplete) {
-                DormantRadarScreen.currentlyTrackedDormant = null;
+                ClientRadarState.currentlyTrackedDormant = null;
                 player.displayClientMessage(
                     Component.literal("§6Tracking stopped: Dormant Radar fully purified!"),
                     true

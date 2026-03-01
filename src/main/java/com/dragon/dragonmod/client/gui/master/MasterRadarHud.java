@@ -1,5 +1,6 @@
 package com.dragon.dragonmod.client.gui.master;
 
+import com.dragon.dragonmod.client.ClientRadarState;
 import com.dragon.dragonmod.client.DragonInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,7 +22,7 @@ public class MasterRadarHud {
         if (player == null || mc.options.hideGui) return;
         
         GuiGraphics gui = event.getGuiGraphics();
-        String targetID = MasterRadarScreen.currentlyTrackedMaster;
+        String targetID = ClientRadarState.currentlyTrackedMaster;
         
         if (targetID == null) return;
         
