@@ -2,27 +2,79 @@
 .gradle/
 build/
 out/
-run/
+classes/
+
+# Eclipse
+*.launch
+.settings/
+.metadata
+.classpath
+.project
+.recommenders
 
 # IntelliJ IDEA
 .idea/
 *.iml
 *.ipr
 *.iws
+out/
 
-# Eclipse
-.classpath
-.project
-.settings/
-bin/
-
-# VSCode
+# VS Code
 .vscode/
 
-# OS
+# Mac
 .DS_Store
-Thumbs.db
 
 # Minecraft
+run/
 logs/
 crash-reports/
+
+# Forge/Minecraft development
+.mixin.out/
+.cache/
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+!build/libs/*.jar
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# Gradle Wrapper 
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
