@@ -57,6 +57,9 @@ crash-reports/
 
 !build/libs/*.jar
 
+# Dependency JARs
+libs/
+
 # virtual machine crash logs
 hs_err_pid*
 
